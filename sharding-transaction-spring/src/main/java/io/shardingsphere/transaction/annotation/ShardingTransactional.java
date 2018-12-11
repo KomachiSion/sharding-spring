@@ -50,16 +50,16 @@ public @interface ShardingTransactional {
     TransactionType type() default TransactionType.LOCAL;
     
     /**
-     * Sharding Sphere runtime environment, JDBC or PROXY.
+     * Sharding sphere runtime environment, JDBC or PROXY.
      *
-     * @return Sharding Sphere runtime environment
+     * @return Sharding sphere runtime environment
      */
     ShardingEnvironment environment() default ShardingEnvironment.JDBC;
     
     /**
-     * Alias value attribute of Spring Transactional.
+     * Alias value attribute of spring {@code Transactional}.
      *
-     * @return value attribute of Transactional
+     * @return value attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -68,9 +68,9 @@ public @interface ShardingTransactional {
     String value() default "";
     
     /**
-     * Alias propagation attribute of Spring Transactional.
+     * Alias {@code propagation} attribute of spring {@code Transactional}.
      *
-     * @return propagation attribute of Transactional
+     * @return {@code propagation} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -79,9 +79,9 @@ public @interface ShardingTransactional {
     Propagation propagation() default Propagation.REQUIRED;
     
     /**
-     * Alias isolation attribute of Spring Transactional.
+     * Alias {@code isolation} attribute of spring {@code Transactional}.
      *
-     * @return isolation attribute of Transactional
+     * @return {@code isolation} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -90,9 +90,9 @@ public @interface ShardingTransactional {
     Isolation isolation() default Isolation.DEFAULT;
     
     /**
-     * Alias timeout attribute of Spring Transactional.
+     * Alias {@code timeout} attribute of spring {@code Transactional}.
      *
-     * @return timeout attribute of Transactional
+     * @return {@code timeout} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -101,9 +101,9 @@ public @interface ShardingTransactional {
     int timeout() default -1;
     
     /**
-     * Alias readOnly attribute of Spring Transactional.
+     * Alias {@code readOnly} attribute of spring {@code Transactional}.
      *
-     * @return readOnly attribute of Transactional
+     * @return {@code readOnly} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -112,9 +112,9 @@ public @interface ShardingTransactional {
     boolean readOnly() default false;
     
     /**
-     * Alias rollbackFor attribute of Spring Transactional.
+     * Alias {@code rollbackFor} attribute of spring {@code Transactional}.
      *
-     * @return rollbackFor attribute of Transactional
+     * @return {@code rollbackFor} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -123,9 +123,9 @@ public @interface ShardingTransactional {
     Class<? extends Throwable>[] rollbackFor() default {};
     
     /**
-     * Alias rollbackForClassName attribute of Spring Transactional.
+     * Alias {@code rollbackForClassName} attribute of spring {@code Transactional}.
      *
-     * @return rollbackForClassName attribute of Transactional
+     * @return {@code rollbackForClassName} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -134,9 +134,9 @@ public @interface ShardingTransactional {
     String[] rollbackForClassName() default {};
     
     /**
-     * Alias noRollbackFor attribute of Spring Transactional.
+     * Alias {@code noRollbackFor} attribute of spring {@code Transactional}.
      *
-     * @return noRollbackFor attribute of Transactional
+     * @return {@code noRollbackFor} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
@@ -145,9 +145,9 @@ public @interface ShardingTransactional {
     Class<? extends Throwable>[] noRollbackFor() default {};
     
     /**
-     * Alias noRollbackForClassName attribute of Spring Transactional.
+     * Alias {@code noRollbackForClassName} attribute of spring {@code Transactional}.
      *
-     * @return noRollbackForClassName attribute of Transactional
+     * @return {@code noRollbackForClassName} attribute of {@code Transactional}
      */
     @AliasFor(
         annotation = Transactional.class,
