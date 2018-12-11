@@ -49,20 +49,17 @@ import java.lang.reflect.Method;
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
 public final class ShardingTransactionalAspect {
     
-    private PlatformTransactionManager transactionManager;
-    
     private TransactionManagerHandler transactionManagerHandler;
     
     /**
-     * Inject spring transactionManager.
-     * This transactionManager required when Switch transaction type for Sharding-Proxy.
+     * Inject spring transaction manager.
+     * This transaction manager required when Switch transaction type for Sharding-Proxy.
      *
-     * @param transactionManager spring transactionManager
+     * @param transactionManager spring transaction manager
      */
     @Autowired
     public void setTransactionManager(final PlatformTransactionManager transactionManager) {
-        this.transactionManager = transactionManager;
-        setTransactionManagerHandler();
+        setTransactionManagerHandler(transactionManager);
     }
     
     /**
@@ -76,7 +73,6 @@ public final class ShardingTransactionalAspect {
     @Before(value = "shardingTransactionalPointCut()")
     public void setTransactionTypeBeforeTransaction(final JoinPoint joinPoint) {
         ShardingTransactional shardingTransactional = getAnnotation(joinPoint);
-        
         switch (shardingTransactional.environment()) {
             case JDBC:
                 TransactionTypeHolder.set(shardingTransactional.type());
@@ -85,14 +81,12 @@ public final class ShardingTransactionalAspect {
                 transactionManagerHandler.switchTransactionType(shardingTransactional.type());
                 break;
             default:
-            
         }
     }
     
     @After(value = "shardingTransactionalPointCut()")
     public void cleanTransactionTypeAfterTransaction(final JoinPoint joinPoint) {
         ShardingTransactional shardingTransactional = getAnnotation(joinPoint);
-        
         switch (shardingTransactional.environment()) {
             case JDBC:
                 TransactionTypeHolder.clear();
@@ -101,11 +95,10 @@ public final class ShardingTransactionalAspect {
                 transactionManagerHandler.unbindResource();
                 break;
             default:
-            
         }
     }
     
-    private void setTransactionManagerHandler() {
+    private void setTransactionManagerHandler(final PlatformTransactionManager transactionManager) {
         switch (TransactionManagerType.getTransactionManagerTypeByClassName(transactionManager.getClass().getName())) {
             case DATASOURCE:
                 transactionManagerHandler = new DataSourceTransactionManagerHandler(transactionManager);
@@ -133,17 +126,17 @@ public final class ShardingTransactionalAspect {
     private enum TransactionManagerType {
         
         /**
-         * Spring DataSourceTransactionManager.
+         * Spring {@code DataSourceTransactionManager}.
          */
         DATASOURCE("org.springframework.jdbc.datasource.DataSourceTransactionManager"),
     
         /**
-         * Spring JpaTransactionManager.
+         * Spring {@code JpaTransactionManager}.
          */
         JPA("org.springframework.orm.jpa.JpaTransactionManager"),
     
         /**
-         * Other spring PlatformTransactionManager.
+         * Other spring {@code PlatformTransactionManager}.
          */
         UNSUPPORTED("");
         
