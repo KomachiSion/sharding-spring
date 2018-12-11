@@ -108,7 +108,7 @@ public class ShardingTransactionalNameSpaceTest extends AbstractJUnit4SpringCont
         TransactionManagerMockUtil
             .testChangeProxyTransactionTypeToLOCAL(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToLOCAL(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=LOCAL");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=LOCAL");
     }
     
     @Test
@@ -116,7 +116,7 @@ public class ShardingTransactionalNameSpaceTest extends AbstractJUnit4SpringCont
         when(statement.execute(anyString())).thenReturn(true);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToXA(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToXA(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=XA");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=XA");
     }
     
     @Test
@@ -125,6 +125,6 @@ public class ShardingTransactionalNameSpaceTest extends AbstractJUnit4SpringCont
         TransactionManagerMockUtil
             .testChangeProxyTransactionTypeToBASE(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToBASE(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=BASE");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=BASE");
     }
 }

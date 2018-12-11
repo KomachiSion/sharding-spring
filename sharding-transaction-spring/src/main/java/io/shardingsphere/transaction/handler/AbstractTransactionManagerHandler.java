@@ -31,7 +31,7 @@ import java.sql.Statement;
  */
 public abstract class AbstractTransactionManagerHandler implements TransactionManagerHandler {
     
-    private static final String SET_TRANSACTION_TYPE_SQL = "SET TRANSACTION_TYPE=%s";
+    private static final String SET_TRANSACTION_TYPE_SQL = "SCTL:SET TRANSACTION_TYPE=%s";
     
     @Override
     public final void switchTransactionType(final TransactionType transactionType) {

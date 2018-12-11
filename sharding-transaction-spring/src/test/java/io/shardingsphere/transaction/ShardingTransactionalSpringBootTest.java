@@ -115,7 +115,7 @@ public class ShardingTransactionalSpringBootTest {
         TransactionManagerMockUtil
             .testChangeProxyTransactionTypeToLOCAL(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToLOCAL(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=LOCAL");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=LOCAL");
     }
     
     @Test
@@ -123,7 +123,7 @@ public class ShardingTransactionalSpringBootTest {
         when(statement.execute(anyString())).thenReturn(true);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToXA(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToXA(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=XA");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=XA");
     }
     
     @Test
@@ -132,6 +132,6 @@ public class ShardingTransactionalSpringBootTest {
         TransactionManagerMockUtil
             .testChangeProxyTransactionTypeToBASE(testService, aspect, dataSourceTransactionManager);
         TransactionManagerMockUtil.testChangeProxyTransactionTypeToBASE(testService, aspect, jpaTransactionManager);
-        verify(statement, times(2)).execute("SET TRANSACTION_TYPE=BASE");
+        verify(statement, times(2)).execute("SCTL:SET TRANSACTION_TYPE=BASE");
     }
 }
