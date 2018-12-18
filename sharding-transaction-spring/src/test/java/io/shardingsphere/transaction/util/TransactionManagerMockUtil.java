@@ -45,8 +45,10 @@ public final class TransactionManagerMockUtil {
      * @param statement mock statement
      * @param jpaTransactionManager mock jpa transaction manager
      * @param dataSourceTransactionManager mock dataSource transaction manager
+     * @throws SQLException SQL exception
      */
-    public static void initTransactionManagerMock(Statement statement, JpaTransactionManager jpaTransactionManager, DataSourceTransactionManager dataSourceTransactionManager) throws SQLException {
+    public static void initTransactionManagerMock(
+            final Statement statement, final JpaTransactionManager jpaTransactionManager, final DataSourceTransactionManager dataSourceTransactionManager) throws SQLException {
         DataSource dataSource = mock(DataSource.class);
         Connection connection = mock(Connection.class);
         EntityManagerFactory entityManagerFactory = mock(EntityManagerFactory.class);
@@ -62,37 +64,40 @@ public final class TransactionManagerMockUtil {
     }
     
     /**
-     * Test change proxy transaction type to LOCAL with specified transaction manager
+     * Test change proxy transaction type to LOCAL with specified transaction manager.
      *
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
      */
-    public static void testChangeProxyTransactionTypeToLOCAL(ShardingTransactionalTestService testService, ShardingTransactionalAspect aspect, PlatformTransactionManager transactionManager) {
+    public static void testChangeProxyTransactionTypeToLOCAL(
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
         aspect.setTransactionManager(transactionManager);
         testService.testChangeTransactionTypeToLOCALWithEnvironment();
     }
     
     /**
-     * Test change proxy transaction type to XA with specified transaction manager
+     * Test change proxy transaction type to XA with specified transaction manager.
      *
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
      */
-    public static void testChangeProxyTransactionTypeToXA(ShardingTransactionalTestService testService, ShardingTransactionalAspect aspect, PlatformTransactionManager transactionManager) {
+    public static void testChangeProxyTransactionTypeToXA(
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
         aspect.setTransactionManager(transactionManager);
         testService.testChangeTransactionTypeToXAWithEnvironment();
     }
     
     /**
-     * Test change proxy transaction type to BASE with specified transaction manager
+     * Test change proxy transaction type to BASE with specified transaction manager.
      *
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
      */
-    public static void testChangeProxyTransactionTypeToBASE(ShardingTransactionalTestService testService, ShardingTransactionalAspect aspect, PlatformTransactionManager transactionManager) {
+    public static void testChangeProxyTransactionTypeToBASE(
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
         aspect.setTransactionManager(transactionManager);
         testService.testChangeTransactionTypeToBASEWithEnvironment();
     }

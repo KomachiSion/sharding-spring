@@ -6,12 +6,12 @@
 
 ## 概述
 
-Sharding-Spring是[Shrading-Sphere](http://shardingsphere.io/index_zh.html)的Spring集成插件。
-旨在减少Spring框架中使用Sharding-Sphere的成本。
+Sharding-Spring是[ShardingSphere](http://shardingsphere.io/index_zh.html)的Spring集成插件。
+旨在减少Spring框架中使用ShardingSphere的成本。
 
 ### Sharding-jdbc-spring
 
-Sharding-jdbc-spring为Sharding-JDBC提供了Spring-Boot自动装配和Spring xml的命名空间，以减少用户在Spring中使用Sharding-Sphere的配置内容。
+Sharding-jdbc-spring为Sharding-JDBC提供了Spring-Boot自动装配和Spring的命名空间，以减少用户在Spring中使用ShardingSphere的配置内容。
 
 ### Sharding-jdbc-orchestration-spring
 
@@ -19,4 +19,4 @@ Sharding-jdbc-orchestration-spring在sharding-jdbc-spring的基础上，添加�
 
 ### Sharding-transaction-spring
 
-Sharding-transaction-spring拓展了Spring的`@Transactional`注解，当使用Sharding-Sphere的分布式事务时，可以通过新注解在不同类型的事务类型中进行切换。
+Sharding-transaction-spring拓展了Spring的`@Transactional`注解，当使用ShardingSphere的分布式事务时，可以通过新注解在不同类型的事务类型中进行切换。
