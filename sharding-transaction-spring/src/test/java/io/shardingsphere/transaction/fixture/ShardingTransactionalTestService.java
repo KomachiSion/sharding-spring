@@ -18,40 +18,27 @@
 package io.shardingsphere.transaction.fixture;
 
 import io.shardingsphere.core.constant.transaction.TransactionType;
-import io.shardingsphere.transaction.ShardingEnvironment;
-import io.shardingsphere.transaction.annotation.ShardingTransactional;
+import io.shardingsphere.transaction.annotation.ShardingTransactionalType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 @Component
-@ShardingTransactional(type = TransactionType.XA)
+@ShardingTransactionalType(TransactionType.XA)
 public class ShardingTransactionalTestService {
     
-    @ShardingTransactional
+    @ShardingTransactionalType
     public void testChangeTransactionTypeToLOCAL() {
     }
     
-    @ShardingTransactional(type = TransactionType.XA)
+    @ShardingTransactionalType(TransactionType.XA)
     public void testChangeTransactionTypeToXA() {
     }
     
-    @ShardingTransactional(type = TransactionType.BASE)
+    @ShardingTransactionalType(TransactionType.BASE)
     public void testChangeTransactionTypeToBASE() {
     }
     
     public void testChangeTransactionTypeInClass() {
-    }
-    
-    @ShardingTransactional(type = TransactionType.BASE, environment = ShardingEnvironment.PROXY)
-    public void testChangeTransactionTypeToBASEWithEnvironment() {
-    }
-    
-    @ShardingTransactional(type = TransactionType.XA, environment = ShardingEnvironment.PROXY)
-    public void testChangeTransactionTypeToXAWithEnvironment() {
-    }
-    
-    @ShardingTransactional(environment = ShardingEnvironment.PROXY)
-    public void testChangeTransactionTypeToLOCALWithEnvironment() {
     }
 }
