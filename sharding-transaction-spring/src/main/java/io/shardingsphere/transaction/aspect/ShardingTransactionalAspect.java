@@ -19,7 +19,8 @@ package io.shardingsphere.transaction.aspect;
 
 import io.shardingsphere.core.exception.ShardingException;
 import io.shardingsphere.core.transaction.TransactionTypeHolder;
-import io.shardingsphere.transaction.annotation.ShardingTransactional;
+import io.shardingsphere.transaction.ShardingEnvironment;
+import io.shardingsphere.transaction.annotation.ShardingTransactionalType;
 import io.shardingsphere.transaction.handler.DataSourceTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.JpaTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.TransactionManagerHandler;
@@ -37,7 +38,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.sql.DataSource;
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 /**
  * Sharding transaction aspect.
@@ -49,7 +54,11 @@ import java.lang.reflect.Method;
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
 public final class ShardingTransactionalAspect {
     
+    private static final String PROXY_TAG = "Sharding-Proxy";
+    
     private TransactionManagerHandler transactionManagerHandler;
+    
+    private ShardingEnvironment environment;
     
     /**
      * Inject spring transaction manager.
@@ -63,22 +72,32 @@ public final class ShardingTransactionalAspect {
     }
     
     /**
+     * Analyze data source type to judge environment of sharding sphere.
+     *
+     * @param dataSources data sources array
+     */
+    @Autowired
+    public void setEnvironment(final DataSource[] dataSources) {
+        environment = null != dataSources && isConnectToProxy(dataSources) ? ShardingEnvironment.PROXY : ShardingEnvironment.JDBC;
+    }
+    
+    /**
      * Sharding transactional AOP pointcut.
      */
-    @Pointcut("@annotation(io.shardingsphere.transaction.annotation.ShardingTransactional) || @within(io.shardingsphere.transaction.annotation.ShardingTransactional)")
+    @Pointcut("@annotation(io.shardingsphere.transaction.annotation.ShardingTransactionalType) || @within(io.shardingsphere.transaction.annotation.ShardingTransactionalType)")
     public void shardingTransactionalPointCut() {
     
     }
     
     @Before(value = "shardingTransactionalPointCut()")
     public void setTransactionTypeBeforeTransaction(final JoinPoint joinPoint) {
-        ShardingTransactional shardingTransactional = getAnnotation(joinPoint);
-        switch (shardingTransactional.environment()) {
+        ShardingTransactionalType shardingTransactionalType = getAnnotation(joinPoint);
+        switch (environment) {
             case JDBC:
-                TransactionTypeHolder.set(shardingTransactional.type());
+                TransactionTypeHolder.set(shardingTransactionalType.value());
                 break;
             case PROXY:
-                transactionManagerHandler.switchTransactionType(shardingTransactional.type());
+                transactionManagerHandler.switchTransactionType(shardingTransactionalType.value());
                 break;
             default:
         }
@@ -86,8 +105,7 @@ public final class ShardingTransactionalAspect {
     
     @After(value = "shardingTransactionalPointCut()")
     public void cleanTransactionTypeAfterTransaction(final JoinPoint joinPoint) {
-        ShardingTransactional shardingTransactional = getAnnotation(joinPoint);
-        switch (shardingTransactional.environment()) {
+        switch (environment) {
             case JDBC:
                 TransactionTypeHolder.clear();
                 break;
@@ -112,12 +130,26 @@ public final class ShardingTransactionalAspect {
         }
     }
     
-    private ShardingTransactional getAnnotation(final JoinPoint joinPoint) {
+    private boolean isConnectToProxy(final DataSource[] dataSources) {
+        for (DataSource each : dataSources) {
+            try (Connection connection = each.getConnection()) {
+                DatabaseMetaData databaseMetaData = connection.getMetaData();
+                if (databaseMetaData.getDatabaseProductVersion().contains(PROXY_TAG)) {
+                    return true;
+                }
+            } catch (SQLException ex) {
+                throw new ShardingException("Get databaseMetaData failed: ", ex);
+            }
+        }
+        return false;
+    }
+    
+    private ShardingTransactionalType getAnnotation(final JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        ShardingTransactional result = method.getAnnotation(ShardingTransactional.class);
+        ShardingTransactionalType result = method.getAnnotation(ShardingTransactionalType.class);
         if (null == result) {
-            result = method.getDeclaringClass().getAnnotation(ShardingTransactional.class);
+            result = method.getDeclaringClass().getAnnotation(ShardingTransactionalType.class);
         }
         return result;
     }

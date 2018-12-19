@@ -30,6 +30,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -69,11 +70,13 @@ public final class TransactionManagerMockUtil {
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
+     * @throws SQLException SQL exception
      */
     public static void testChangeProxyTransactionTypeToLOCAL(
-            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) throws SQLException {
         aspect.setTransactionManager(transactionManager);
-        testService.testChangeTransactionTypeToLOCALWithEnvironment();
+        aspect.setEnvironment(getProxyDataSource());
+        testService.testChangeTransactionTypeToLOCAL();
     }
     
     /**
@@ -82,11 +85,13 @@ public final class TransactionManagerMockUtil {
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
+     * @throws SQLException SQL exception
      */
     public static void testChangeProxyTransactionTypeToXA(
-            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) throws SQLException {
         aspect.setTransactionManager(transactionManager);
-        testService.testChangeTransactionTypeToXAWithEnvironment();
+        aspect.setEnvironment(getProxyDataSource());
+        testService.testChangeTransactionTypeToXA();
     }
     
     /**
@@ -95,10 +100,22 @@ public final class TransactionManagerMockUtil {
      * @param testService sharding transaction test service
      * @param aspect sharding transaction aspect
      * @param transactionManager specified transaction manager
+     * @throws SQLException SQL exception
      */
     public static void testChangeProxyTransactionTypeToBASE(
-            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) {
+            final ShardingTransactionalTestService testService, final ShardingTransactionalAspect aspect, final PlatformTransactionManager transactionManager) throws SQLException {
         aspect.setTransactionManager(transactionManager);
-        testService.testChangeTransactionTypeToBASEWithEnvironment();
+        aspect.setEnvironment(getProxyDataSource());
+        testService.testChangeTransactionTypeToBASE();
+    }
+    
+    private static DataSource[] getProxyDataSource() throws SQLException {
+        DataSource dataSource = mock(DataSource.class);
+        Connection connection = mock(Connection.class);
+        DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
+        when(databaseMetaData.getDatabaseProductVersion()).thenReturn("5.6.0-Sharding-Proxy 3.0.1-SNAPSHOT");
+        when(connection.getMetaData()).thenReturn(databaseMetaData);
+        when(dataSource.getConnection()).thenReturn(connection);
+        return new DataSource[] {dataSource};
     }
 }
