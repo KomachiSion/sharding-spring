@@ -113,7 +113,7 @@ public final class TransactionManagerMockUtil {
         DataSource dataSource = mock(DataSource.class);
         Connection connection = mock(Connection.class);
         DatabaseMetaData databaseMetaData = mock(DatabaseMetaData.class);
-        when(databaseMetaData.getDatabaseProductVersion()).thenReturn("5.6.0-Sharding-Proxy 3.0.1-SNAPSHOT");
+        when(databaseMetaData.getDatabaseProductVersion()).thenReturn("5.6.0-Sharding-Proxy x.x.x");
         when(connection.getMetaData()).thenReturn(databaseMetaData);
         when(dataSource.getConnection()).thenReturn(connection);
         return new DataSource[] {dataSource};
