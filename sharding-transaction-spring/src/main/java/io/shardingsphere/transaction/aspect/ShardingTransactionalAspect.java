@@ -20,7 +20,7 @@ package io.shardingsphere.transaction.aspect;
 import io.shardingsphere.core.exception.ShardingException;
 import io.shardingsphere.core.transaction.TransactionTypeHolder;
 import io.shardingsphere.transaction.ShardingEnvironment;
-import io.shardingsphere.transaction.annotation.ShardingTransactionalType;
+import io.shardingsphere.transaction.annotation.ShardingTransactionType;
 import io.shardingsphere.transaction.handler.DataSourceTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.JpaTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.TransactionManagerHandler;
@@ -84,20 +84,20 @@ public final class ShardingTransactionalAspect {
     /**
      * Sharding transactional AOP pointcut.
      */
-    @Pointcut("@annotation(io.shardingsphere.transaction.annotation.ShardingTransactionalType) || @within(io.shardingsphere.transaction.annotation.ShardingTransactionalType)")
+    @Pointcut("@annotation(io.shardingsphere.transaction.annotation.ShardingTransactionType) || @within(io.shardingsphere.transaction.annotation.ShardingTransactionType)")
     public void shardingTransactionalPointCut() {
     
     }
     
     @Before(value = "shardingTransactionalPointCut()")
     public void setTransactionTypeBeforeTransaction(final JoinPoint joinPoint) {
-        ShardingTransactionalType shardingTransactionalType = getAnnotation(joinPoint);
+        ShardingTransactionType shardingTransactionType = getAnnotation(joinPoint);
         switch (environment) {
             case JDBC:
-                TransactionTypeHolder.set(shardingTransactionalType.value());
+                TransactionTypeHolder.set(shardingTransactionType.value());
                 break;
             case PROXY:
-                transactionManagerHandler.switchTransactionType(shardingTransactionalType.value());
+                transactionManagerHandler.switchTransactionType(shardingTransactionType.value());
                 break;
             default:
         }
@@ -144,12 +144,12 @@ public final class ShardingTransactionalAspect {
         return false;
     }
     
-    private ShardingTransactionalType getAnnotation(final JoinPoint joinPoint) {
+    private ShardingTransactionType getAnnotation(final JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        ShardingTransactionalType result = method.getAnnotation(ShardingTransactionalType.class);
+        ShardingTransactionType result = method.getAnnotation(ShardingTransactionType.class);
         if (null == result) {
-            result = method.getDeclaringClass().getAnnotation(ShardingTransactionalType.class);
+            result = method.getDeclaringClass().getAnnotation(ShardingTransactionType.class);
         }
         return result;
     }
