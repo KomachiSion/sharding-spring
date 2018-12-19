@@ -555,7 +555,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker-maven-plugin.version}</version>
             </plugin>
-            <!--
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
@@ -570,7 +570,7 @@
                     </execution>
                 </executions>
             </plugin>
-             -->
+             
         </plugins>
     </build>
     
@@ -667,6 +667,32 @@
         <developerConnection>scm:https://github.com/sharding-sphere/sharding-spring</developerConnection>
         <url>https://github.com/sharding-sphere/sharding-spring</url>
     </scm>
+
+    <mailingLists>
+        <mailingList>
+            <name>Zhangliang</name>
+            <post>zhangliang@apache.org</post>
+        </mailingList>
+        <mailingList>
+            <name>Caohao</name>
+            <post>caohaoch@gmail.com</post>
+        </mailingList>
+    </mailingLists>
+    
+    <developers>
+        <developer>
+            <id>zhangliang</id>
+            <name>ZhangLiang</name>
+            <email>zhangliang@apache.org</email>
+            <timezone>8</timezone>
+        </developer>
+        <developer>
+            <id>caohao</id>
+            <name>CaoHao</name>
+            <email>caohaoch@gmail.com</email>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
     
     <distributionManagement>
         <snapshotRepository>
