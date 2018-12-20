@@ -18,24 +18,24 @@
 package io.shardingsphere.transaction.fixture;
 
 import io.shardingsphere.core.constant.transaction.TransactionType;
-import io.shardingsphere.transaction.annotation.ShardingTransactionalType;
+import io.shardingsphere.transaction.annotation.ShardingTransactionType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 @Component
-@ShardingTransactionalType(TransactionType.XA)
+@ShardingTransactionType(TransactionType.XA)
 public class ShardingTransactionalTestService {
     
-    @ShardingTransactionalType
+    @ShardingTransactionType
     public void testChangeTransactionTypeToLOCAL() {
     }
     
-    @ShardingTransactionalType(TransactionType.XA)
+    @ShardingTransactionType(TransactionType.XA)
     public void testChangeTransactionTypeToXA() {
     }
     
-    @ShardingTransactionalType(TransactionType.BASE)
+    @ShardingTransactionType(TransactionType.BASE)
     public void testChangeTransactionTypeToBASE() {
     }
     

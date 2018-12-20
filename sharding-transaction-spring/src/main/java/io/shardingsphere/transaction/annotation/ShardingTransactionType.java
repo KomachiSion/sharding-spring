@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface ShardingTransactionalType {
+public @interface ShardingTransactionType {
     
     /**
      * Sharding transaction type, include LOCAL, XA, BASE.
