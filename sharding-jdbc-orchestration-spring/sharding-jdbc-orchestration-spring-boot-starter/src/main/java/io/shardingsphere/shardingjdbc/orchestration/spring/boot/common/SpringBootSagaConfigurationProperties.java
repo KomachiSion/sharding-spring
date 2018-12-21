@@ -33,5 +33,5 @@ import lombok.Setter;
 @Setter
 public class SpringBootSagaConfigurationProperties {
     
-    private SagaConfiguration saga;
+    private SagaConfiguration saga = new SagaConfiguration();
 }
