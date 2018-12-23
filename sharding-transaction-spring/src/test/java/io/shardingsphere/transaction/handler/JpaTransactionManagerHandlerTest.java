@@ -17,8 +17,8 @@
 
 package io.shardingsphere.transaction.handler;
 
-import io.shardingsphere.core.constant.transaction.TransactionType;
 import io.shardingsphere.core.exception.ShardingException;
+import io.shardingsphere.transaction.api.TransactionType;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.junit.Before;
 import org.junit.Test;

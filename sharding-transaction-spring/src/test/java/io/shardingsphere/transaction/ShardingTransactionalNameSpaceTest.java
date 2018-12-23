@@ -17,9 +17,9 @@
 
 package io.shardingsphere.transaction;
 
-import io.shardingsphere.core.constant.transaction.TransactionType;
 import io.shardingsphere.core.exception.ShardingException;
-import io.shardingsphere.core.transaction.TransactionTypeHolder;
+import io.shardingsphere.transaction.api.TransactionType;
+import io.shardingsphere.transaction.api.TransactionTypeHolder;
 import io.shardingsphere.transaction.aspect.ShardingTransactionalAspect;
 import io.shardingsphere.transaction.fixture.ShardingTransactionalTestService;
 import io.shardingsphere.transaction.util.TransactionManagerMockUtil;
@@ -33,6 +33,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -43,8 +44,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import javax.sql.DataSource;
 
 @ContextConfiguration(locations = "classpath:shardingTransactionTest.xml")
 public class ShardingTransactionalNameSpaceTest extends AbstractJUnit4SpringContextTests {
