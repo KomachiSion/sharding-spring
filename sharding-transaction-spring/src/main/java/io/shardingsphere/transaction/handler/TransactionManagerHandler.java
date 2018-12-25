@@ -17,7 +17,7 @@
 
 package io.shardingsphere.transaction.handler;
 
-import io.shardingsphere.core.constant.transaction.TransactionType;
+import io.shardingsphere.transaction.api.TransactionType;
 
 /**
  * Transaction manager handler interface.

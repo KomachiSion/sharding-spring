@@ -17,8 +17,8 @@
 
 package io.shardingsphere.transaction.fixture;
 
-import io.shardingsphere.core.constant.transaction.TransactionType;
 import io.shardingsphere.transaction.annotation.ShardingTransactionType;
+import io.shardingsphere.transaction.api.TransactionType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 

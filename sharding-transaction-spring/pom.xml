@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>io.shardingsphere</groupId>
-            <artifactId>sharding-core</artifactId>
+            <artifactId>sharding-transaction-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         
