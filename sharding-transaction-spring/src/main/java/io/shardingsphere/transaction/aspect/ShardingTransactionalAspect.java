@@ -18,9 +18,9 @@
 package io.shardingsphere.transaction.aspect;
 
 import io.shardingsphere.core.exception.ShardingException;
-import io.shardingsphere.core.transaction.TransactionTypeHolder;
 import io.shardingsphere.transaction.ShardingEnvironment;
 import io.shardingsphere.transaction.annotation.ShardingTransactionType;
+import io.shardingsphere.transaction.api.TransactionTypeHolder;
 import io.shardingsphere.transaction.handler.DataSourceTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.JpaTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.TransactionManagerHandler;
