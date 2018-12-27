@@ -15,14 +15,14 @@
  * </p>
  */
 
-package io.shardingsphere.transaction;
+package io.shardingsphere.transaction.spring.boot;
 
 import io.shardingsphere.core.exception.ShardingException;
 import io.shardingsphere.transaction.api.TransactionType;
 import io.shardingsphere.transaction.api.TransactionTypeHolder;
 import io.shardingsphere.transaction.aspect.ShardingTransactionalAspect;
-import io.shardingsphere.transaction.fixture.ShardingTransactionalTestService;
-import io.shardingsphere.transaction.util.TransactionManagerMockUtil;
+import io.shardingsphere.transaction.spring.boot.fixture.ShardingTransactionalTestService;
+import io.shardingsphere.transaction.spring.boot.util.TransactionManagerMockUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -52,7 +51,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = ShardingTransactionalSpringBootTest.class)
 @SpringBootApplication
-@ComponentScans({@ComponentScan("io.shardingsphere.transaction.aspect"), @ComponentScan("io.shardingsphere.transaction.fixture")})
+@ComponentScan("io.shardingsphere.transaction.spring.boot.fixture")
 public class ShardingTransactionalSpringBootTest {
     
     @Autowired

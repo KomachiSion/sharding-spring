@@ -25,7 +25,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     AllHandlerTests.class,
-    ShardingTransactionalSpringBootTest.class,
     ShardingTransactionalNameSpaceTest.class
 })
 public class AllTests {
