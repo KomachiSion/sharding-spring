@@ -6,7 +6,7 @@
     <parent>
         <artifactId>sharding-spring</artifactId>
         <groupId>io.shardingsphere</groupId>
-        <version>3.1.0</version>
+        <version>4.0.0.M1-SNAPSHOT</version>
     </parent>
     <artifactId>sharding-transaction-spring-boot-starter</artifactId>
     <name>${project.artifactId}</name>
