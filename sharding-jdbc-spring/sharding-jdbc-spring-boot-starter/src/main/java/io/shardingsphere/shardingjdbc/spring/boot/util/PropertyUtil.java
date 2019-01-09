@@ -61,7 +61,7 @@ public final class PropertyUtil {
                 return (T) v2(environment, prefix, targetClass);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     @SneakyThrows
     private static Object v1(final Environment environment, final String prefix) {
