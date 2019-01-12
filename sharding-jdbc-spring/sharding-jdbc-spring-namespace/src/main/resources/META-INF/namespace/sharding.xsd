@@ -122,6 +122,15 @@
             <xsd:attribute name="strategy-type" type="xsd:string" />
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="key-generator">
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string" use="required" />
+            <xsd:attribute name="column" type="xsd:string" use="required" />
+            <xsd:attribute name="type" type="xsd:string" />
+            <xsd:attribute name="class-name" type="xsd:string" />
+            <xsd:attribute name="props-ref" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
     <xsd:element name="config-map">
         <xsd:complexType>
             <xsd:complexContent>
