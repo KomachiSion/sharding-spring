@@ -65,7 +65,7 @@
             default-data-source-name="dbtbl_0" 
             default-database-strategy-ref="standardStrategy" 
             default-table-strategy-ref="inlineStrategy" 
-            default-key-generator-ref="keyGenerator">
+            default-key-generator-ref="defaultKeyGenerator">
             <sharding:table-rules>
                 <sharding:table-rule logic-table="t_order" />
             </sharding:table-rules>
