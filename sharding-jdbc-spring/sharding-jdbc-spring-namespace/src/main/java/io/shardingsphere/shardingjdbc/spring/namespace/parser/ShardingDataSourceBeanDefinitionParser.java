@@ -48,6 +48,7 @@ import java.util.Properties;
  * Sharding data source parser for spring namespace.
  * 
  * @author caohao
+ * @author panjuan
  */
 public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDefinitionParser {
     

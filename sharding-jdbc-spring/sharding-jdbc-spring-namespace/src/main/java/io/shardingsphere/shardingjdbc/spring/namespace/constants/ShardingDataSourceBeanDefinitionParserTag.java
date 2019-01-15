@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
  * Sharding data source parser tag constants.
  * 
  * @author caohao
+ * @author panjuan
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShardingDataSourceBeanDefinitionParserTag {
