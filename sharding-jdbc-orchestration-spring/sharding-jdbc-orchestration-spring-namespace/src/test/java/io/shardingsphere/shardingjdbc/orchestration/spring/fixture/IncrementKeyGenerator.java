@@ -17,16 +17,28 @@
 
 package io.shardingsphere.shardingjdbc.orchestration.spring.fixture;
 
-import io.shardingsphere.core.keygen.KeyGenerator;
+import io.shardingsphere.core.keygen.generator.KeyGenerator;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class IncrementKeyGenerator implements KeyGenerator {
     
+    @Getter
+    @Setter
+    private Properties properties = new Properties();
+    
     private final AtomicInteger sequence = new AtomicInteger(100);
     
     @Override
-    public Number generateKey() {
+    public Comparable<?> generateKey() {
         return sequence.incrementAndGet();
+    }
+    
+    @Override
+    public String getType() {
+        return "INCREMENT";
     }
 }
