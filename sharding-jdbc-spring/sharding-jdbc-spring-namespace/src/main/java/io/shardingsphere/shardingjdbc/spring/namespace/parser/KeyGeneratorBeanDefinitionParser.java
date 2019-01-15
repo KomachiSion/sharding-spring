@@ -17,6 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.spring.namespace.parser;
 
+import com.google.common.base.Strings;
 import io.shardingsphere.api.config.KeyGeneratorConfiguration;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -37,7 +38,10 @@ public final class KeyGeneratorBeanDefinitionParser extends AbstractBeanDefiniti
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(KeyGeneratorConfiguration.class);
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));        
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
-        factory.addConstructorArgReference(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE));
+        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(properties)) {
+            factory.addConstructorArgReference(properties);
+        }
         return factory.getBeanDefinition();
     }
 }
