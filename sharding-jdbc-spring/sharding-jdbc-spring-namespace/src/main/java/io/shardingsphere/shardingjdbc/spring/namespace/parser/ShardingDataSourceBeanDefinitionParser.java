@@ -87,9 +87,9 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     }
     
     private void parseKeyGenerator(final BeanDefinitionBuilder factory, final Element element) {
-        String defaultKeyGenerator = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(defaultKeyGenerator)) {
-            factory.addPropertyReference("defaultKeyGenerator", defaultKeyGenerator);
+        String defaultKeyGeneratorConfig = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(defaultKeyGeneratorConfig)) {
+            factory.addPropertyValue("defaultKeyGeneratorConfig", defaultKeyGeneratorConfig);
         }
     }
     
