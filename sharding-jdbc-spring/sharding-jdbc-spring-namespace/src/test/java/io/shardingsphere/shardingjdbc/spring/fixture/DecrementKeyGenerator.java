@@ -17,7 +17,6 @@
 
 package io.shardingsphere.shardingjdbc.spring.fixture;
 
-
 import io.shardingsphere.core.keygen.generator.KeyGenerator;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,5 +38,7 @@ public final class DecrementKeyGenerator implements KeyGenerator {
     }
     
     @Override
-    public String getType() { return "DECREMENT"; }
+    public String getType() {
+        return "DECREMENT"; 
+    }
 }
