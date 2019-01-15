@@ -25,7 +25,6 @@
     <sharding:none-strategy id="noneStrategy" />
     
     <sharding:key-generator id="defaultKeyGenerator" type="INCREMENT" />
-    
     <sharding:key-generator id="orderKeyGenerator" type="INCREMENT" column="order_id" />
     
     <sharding:data-source id="simpleShardingDataSource">
