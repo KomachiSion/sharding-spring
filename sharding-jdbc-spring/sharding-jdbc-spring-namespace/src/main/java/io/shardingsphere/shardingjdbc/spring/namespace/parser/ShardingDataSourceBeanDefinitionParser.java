@@ -82,14 +82,14 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         factory.addPropertyValue("masterSlaveRuleConfigs", parseMasterSlaveRulesConfig(shardingRuleElement));
         factory.addPropertyValue("bindingTableGroups", parseBindingTablesConfig(shardingRuleElement));
         factory.addPropertyValue("broadcastTables", parseBroadcastTables(shardingRuleElement));
-        parseKeyGenerator(factory, shardingRuleElement);
+        parseDefaultKeyGenerator(factory, shardingRuleElement);
         return factory.getBeanDefinition();
     }
     
-    private void parseKeyGenerator(final BeanDefinitionBuilder factory, final Element element) {
+    private void parseDefaultKeyGenerator(final BeanDefinitionBuilder factory, final Element element) {
         String defaultKeyGeneratorConfig = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(defaultKeyGeneratorConfig)) {
-            factory.addPropertyValue("defaultKeyGeneratorConfig", defaultKeyGeneratorConfig);
+            factory.addPropertyReference("defaultKeyGeneratorConfig", defaultKeyGeneratorConfig);
         }
     }
     
