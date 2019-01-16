@@ -48,6 +48,7 @@ import java.util.Properties;
  * Sharding data source parser for spring namespace.
  * 
  * @author caohao
+ * @author panjuan
  */
 public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDefinitionParser {
     
@@ -82,14 +83,14 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         factory.addPropertyValue("masterSlaveRuleConfigs", parseMasterSlaveRulesConfig(shardingRuleElement));
         factory.addPropertyValue("bindingTableGroups", parseBindingTablesConfig(shardingRuleElement));
         factory.addPropertyValue("broadcastTables", parseBroadcastTables(shardingRuleElement));
-        parseKeyGenerator(factory, shardingRuleElement);
+        parseDefaultKeyGenerator(factory, shardingRuleElement);
         return factory.getBeanDefinition();
     }
     
-    private void parseKeyGenerator(final BeanDefinitionBuilder factory, final Element element) {
-        String defaultKeyGenerator = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(defaultKeyGenerator)) {
-            factory.addPropertyReference("defaultKeyGenerator", defaultKeyGenerator);
+    private void parseDefaultKeyGenerator(final BeanDefinitionBuilder factory, final Element element) {
+        String defaultKeyGeneratorConfig = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(defaultKeyGeneratorConfig)) {
+            factory.addPropertyReference("defaultKeyGeneratorConfig", defaultKeyGeneratorConfig);
         }
     }
     
@@ -181,13 +182,9 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         if (!Strings.isNullOrEmpty(tableStrategy)) {
             factory.addPropertyReference("tableShardingStrategyConfig", tableStrategy);
         }
-        String keyGeneratorColumnName = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_NAME_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(keyGeneratorColumnName)) {
-            factory.addPropertyValue("keyGeneratorColumnName", keyGeneratorColumnName);
-        }
         String keyGenerator = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.KEY_GENERATOR_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(keyGenerator)) {
-            factory.addPropertyReference("keyGenerator", keyGenerator);
+            factory.addPropertyReference("keyGeneratorConfig", keyGenerator);
         }
         String logicIndex = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_INDEX);
         if (!Strings.isNullOrEmpty(logicIndex)) {
