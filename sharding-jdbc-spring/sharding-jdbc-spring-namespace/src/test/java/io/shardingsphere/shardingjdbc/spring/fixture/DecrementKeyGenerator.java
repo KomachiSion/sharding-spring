@@ -17,9 +17,9 @@
 
 package io.shardingsphere.shardingjdbc.spring.fixture;
 
-import io.shardingsphere.core.keygen.generator.KeyGenerator;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.shardingsphere.core.keygen.generator.KeyGenerator;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -17,22 +17,6 @@
 
 package io.shardingsphere.shardingjdbc.spring;
 
-import io.shardingsphere.api.ConfigMapContext;
-import io.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm;
-import io.shardingsphere.api.algorithm.masterslave.RoundRobinMasterSlaveLoadBalanceAlgorithm;
-import io.shardingsphere.api.config.strategy.ComplexShardingStrategyConfiguration;
-import io.shardingsphere.api.config.strategy.HintShardingStrategyConfiguration;
-import io.shardingsphere.api.config.strategy.InlineShardingStrategyConfiguration;
-import io.shardingsphere.api.config.strategy.NoneShardingStrategyConfiguration;
-import io.shardingsphere.api.config.strategy.StandardShardingStrategyConfiguration;
-import io.shardingsphere.core.constant.properties.ShardingProperties;
-import io.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
-import io.shardingsphere.core.rule.BindingTableRule;
-import io.shardingsphere.core.rule.DataNode;
-import io.shardingsphere.core.rule.ShardingRule;
-import io.shardingsphere.core.rule.TableRule;
-import io.shardingsphere.shardingjdbc.jdbc.core.ShardingContext;
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import io.shardingsphere.shardingjdbc.spring.algorithm.DefaultComplexKeysShardingAlgorithm;
 import io.shardingsphere.shardingjdbc.spring.algorithm.DefaultHintShardingAlgorithm;
 import io.shardingsphere.shardingjdbc.spring.algorithm.PreciseModuloDatabaseShardingAlgorithm;
@@ -41,6 +25,22 @@ import io.shardingsphere.shardingjdbc.spring.algorithm.RangeModuloTableShardingA
 import io.shardingsphere.shardingjdbc.spring.datasource.SpringShardingDataSource;
 import io.shardingsphere.shardingjdbc.spring.fixture.IncrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.util.FieldValueUtil;
+import org.apache.shardingsphere.api.ConfigMapContext;
+import org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.algorithm.masterslave.RoundRobinMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.config.strategy.ComplexShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.strategy.HintShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.strategy.InlineShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.strategy.NoneShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.strategy.StandardShardingStrategyConfiguration;
+import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
+import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
+import org.apache.shardingsphere.core.rule.BindingTableRule;
+import org.apache.shardingsphere.core.rule.DataNode;
+import org.apache.shardingsphere.core.rule.ShardingRule;
+import org.apache.shardingsphere.core.rule.TableRule;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.ShardingContext;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;

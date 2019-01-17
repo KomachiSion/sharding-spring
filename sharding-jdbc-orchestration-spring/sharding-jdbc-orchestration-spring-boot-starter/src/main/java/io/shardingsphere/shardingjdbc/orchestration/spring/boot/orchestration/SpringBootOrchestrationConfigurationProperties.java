@@ -17,7 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.orchestration.spring.boot.orchestration;
 
-import io.shardingsphere.orchestration.yaml.YamlOrchestrationConfiguration;
+import org.apache.shardingsphere.orchestration.yaml.YamlOrchestrationConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

@@ -17,7 +17,7 @@
 
 package io.shardingsphere.transaction.handler;
 
-import io.shardingsphere.core.exception.ShardingException;
+import org.apache.shardingsphere.core.exception.ShardingException;
 import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;

@@ -17,16 +17,15 @@
 
 package io.shardingsphere.shardingjdbc.spring.algorithm;
 
-import io.shardingsphere.api.algorithm.sharding.ShardingValue;
-import io.shardingsphere.api.algorithm.sharding.complex.ComplexKeysShardingAlgorithm;
+import org.apache.shardingsphere.api.algorithm.sharding.ShardingValue;
+import org.apache.shardingsphere.api.algorithm.sharding.complex.ComplexKeysShardingAlgorithm;
 
 import java.util.Collection;
 
 public final class DefaultComplexKeysShardingAlgorithm implements ComplexKeysShardingAlgorithm {
-
+    
     @Override
     public Collection<String> doSharding(final Collection<String> availableTargetNames, final Collection<ShardingValue> shardingValues) {
         return availableTargetNames;
     }
-
 }

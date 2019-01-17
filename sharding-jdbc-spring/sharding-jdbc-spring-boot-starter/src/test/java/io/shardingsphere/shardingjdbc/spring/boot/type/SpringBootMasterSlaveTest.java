@@ -17,9 +17,9 @@
 
 package io.shardingsphere.shardingjdbc.spring.boot.type;
 
-import io.shardingsphere.api.ConfigMapContext;
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.shardingsphere.api.ConfigMapContext;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

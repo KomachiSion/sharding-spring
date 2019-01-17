@@ -17,9 +17,9 @@
 
 package io.shardingsphere.shardingjdbc.spring;
 
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import lombok.Getter;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.h2.tools.RunScript;
 import org.junit.Before;
 import org.springframework.test.context.TestExecutionListeners;

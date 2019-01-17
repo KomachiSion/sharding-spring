@@ -18,8 +18,8 @@
 package io.shardingsphere.shardingjdbc.orchestration.spring.namespace.parser;
 
 import com.google.common.base.Strings;
-import io.shardingsphere.orchestration.reg.api.RegistryCenterConfiguration;
 import io.shardingsphere.shardingjdbc.orchestration.spring.namespace.constants.RegistryCenterBeanDefinitionParserTag;
+import org.apache.shardingsphere.orchestration.reg.api.RegistryCenterConfiguration;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;

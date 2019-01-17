@@ -18,10 +18,10 @@
 package io.shardingsphere.shardingjdbc.orchestration.spring.namespace.parser;
 
 import com.google.common.base.Strings;
-import io.shardingsphere.orchestration.config.OrchestrationConfiguration;
 import io.shardingsphere.shardingjdbc.orchestration.spring.datasource.OrchestrationSpringMasterSlaveDataSource;
 import io.shardingsphere.shardingjdbc.orchestration.spring.datasource.OrchestrationSpringShardingDataSource;
 import io.shardingsphere.shardingjdbc.orchestration.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
+import org.apache.shardingsphere.orchestration.config.OrchestrationConfiguration;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;

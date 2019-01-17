@@ -18,17 +18,16 @@
 package io.shardingsphere.shardingjdbc.spring.boot;
 
 import com.google.common.base.Preconditions;
-import io.shardingsphere.core.exception.ShardingException;
-import io.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
-import io.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 import io.shardingsphere.shardingjdbc.spring.boot.common.SpringBootConfigMapConfigurationProperties;
 import io.shardingsphere.shardingjdbc.spring.boot.common.SpringBootPropertiesConfigurationProperties;
 import io.shardingsphere.shardingjdbc.spring.boot.masterslave.SpringBootMasterSlaveRuleConfigurationProperties;
 import io.shardingsphere.shardingjdbc.spring.boot.sharding.SpringBootShardingRuleConfigurationProperties;
 import io.shardingsphere.shardingjdbc.spring.boot.util.PropertyUtil;
-import io.shardingsphere.shardingjdbc.util.DataSourceUtil;
 import lombok.RequiredArgsConstructor;
-
+import org.apache.shardingsphere.core.exception.ShardingException;
+import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
+import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
+import org.apache.shardingsphere.shardingjdbc.util.DataSourceUtil;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;

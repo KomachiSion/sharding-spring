@@ -19,13 +19,13 @@ package io.shardingsphere.shardingjdbc.spring.namespace.parser;
 
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
-import io.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithmType;
-import io.shardingsphere.api.config.rule.MasterSlaveRuleConfiguration;
-import io.shardingsphere.api.config.rule.ShardingRuleConfiguration;
-import io.shardingsphere.api.config.rule.TableRuleConfiguration;
 import io.shardingsphere.shardingjdbc.spring.datasource.SpringShardingDataSource;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.MasterSlaveDataSourceBeanDefinitionParserTag;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
+import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithmType;
+import org.apache.shardingsphere.api.config.rule.MasterSlaveRuleConfiguration;
+import org.apache.shardingsphere.api.config.rule.ShardingRuleConfiguration;
+import org.apache.shardingsphere.api.config.rule.TableRuleConfiguration;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;

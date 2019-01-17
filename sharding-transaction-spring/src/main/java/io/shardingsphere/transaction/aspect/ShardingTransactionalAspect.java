@@ -17,15 +17,15 @@
 
 package io.shardingsphere.transaction.aspect;
 
-import io.shardingsphere.core.exception.ShardingException;
 import io.shardingsphere.transaction.ShardingEnvironment;
 import io.shardingsphere.transaction.annotation.ShardingTransactionType;
-import io.shardingsphere.transaction.api.TransactionTypeHolder;
 import io.shardingsphere.transaction.handler.DataSourceTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.JpaTransactionManagerHandler;
 import io.shardingsphere.transaction.handler.TransactionManagerHandler;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.shardingsphere.core.exception.ShardingException;
+import org.apache.shardingsphere.transaction.core.TransactionTypeHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;

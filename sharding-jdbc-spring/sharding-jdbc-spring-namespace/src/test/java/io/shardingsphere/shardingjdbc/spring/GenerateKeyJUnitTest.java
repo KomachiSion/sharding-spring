@@ -17,11 +17,11 @@
 
 package io.shardingsphere.shardingjdbc.spring;
 
-import io.shardingsphere.core.rule.TableRule;
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import io.shardingsphere.shardingjdbc.spring.fixture.DecrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.fixture.IncrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.util.FieldValueUtil;
+import org.apache.shardingsphere.core.rule.TableRule;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 

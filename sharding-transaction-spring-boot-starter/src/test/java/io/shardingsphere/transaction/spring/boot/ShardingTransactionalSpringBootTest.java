@@ -17,12 +17,12 @@
 
 package io.shardingsphere.transaction.spring.boot;
 
-import io.shardingsphere.core.exception.ShardingException;
-import io.shardingsphere.transaction.api.TransactionType;
-import io.shardingsphere.transaction.api.TransactionTypeHolder;
 import io.shardingsphere.transaction.aspect.ShardingTransactionalAspect;
 import io.shardingsphere.transaction.spring.boot.fixture.ShardingTransactionalTestService;
 import io.shardingsphere.transaction.spring.boot.util.TransactionManagerMockUtil;
+import org.apache.shardingsphere.core.exception.ShardingException;
+import org.apache.shardingsphere.transaction.core.TransactionType;
+import org.apache.shardingsphere.transaction.core.TransactionTypeHolder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

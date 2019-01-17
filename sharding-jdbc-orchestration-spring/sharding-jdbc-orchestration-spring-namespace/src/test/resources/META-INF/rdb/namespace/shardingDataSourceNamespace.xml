@@ -14,7 +14,7 @@
     <bean id="rangeModuloTableShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.RangeModuloTableShardingAlgorithm" />
     <bean id="defaultComplexKeysShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.DefaultComplexKeysShardingAlgorithm" />
     <bean id="defaultHintShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.DefaultHintShardingAlgorithm" />
-    <bean id="randomStrategy" class="io.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm" />
+    <bean id="randomStrategy" class="org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm" />
     
     <sharding:standard-strategy id="standardStrategy" sharding-column="user_id" precise-algorithm-ref="preciseModuloDatabaseShardingAlgorithm" />
     <sharding:standard-strategy id="rangeStandardStrategy" sharding-column="order_id" precise-algorithm-ref="preciseModuloTableShardingAlgorithm" range-algorithm-ref="rangeModuloTableShardingAlgorithm" />

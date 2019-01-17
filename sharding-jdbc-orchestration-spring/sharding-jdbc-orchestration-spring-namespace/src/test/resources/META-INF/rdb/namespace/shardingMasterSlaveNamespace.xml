@@ -9,7 +9,7 @@
 
     <import resource="../datasource/masterSlaveDataSource.xml" />
 
-    <bean id="randomStrategy" class="io.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm" />
+    <bean id="randomStrategy" class="org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm" />
     <bean id="preciseModuloDatabaseShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.PreciseModuloDatabaseShardingAlgorithm" />
     <bean id="preciseModuloTableShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.PreciseModuloTableShardingAlgorithm" />
     <bean id="rangeModuloTableShardingAlgorithm" class="io.shardingsphere.shardingjdbc.orchestration.spring.algorithm.RangeModuloTableShardingAlgorithm" />

@@ -17,9 +17,9 @@
 
 package io.shardingsphere.shardingjdbc.orchestration.spring.registry;
 
-import io.shardingsphere.orchestration.reg.api.RegistryCenter;
-import io.shardingsphere.orchestration.reg.api.RegistryCenterConfiguration;
-import io.shardingsphere.orchestration.reg.listener.DataChangedEventListener;
+import org.apache.shardingsphere.orchestration.reg.api.RegistryCenter;
+import org.apache.shardingsphere.orchestration.reg.api.RegistryCenterConfiguration;
+import org.apache.shardingsphere.orchestration.reg.listener.DataChangedEventListener;
 
 import java.util.Collections;
 import java.util.List;
