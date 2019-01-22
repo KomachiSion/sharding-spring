@@ -46,7 +46,10 @@ import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Orchestration spring boot sharding and master-slave configuration.
@@ -134,31 +137,30 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
     
     @Override
     public final void setEnvironment(final Environment environment) {
-        setDataSourceMap(environment);
-    }
-    
-    @SuppressWarnings("unchecked")
-    private void setDataSourceMap(final Environment environment) {
         String prefix = "sharding.jdbc.datasource.";
-        for (String each : resolveDataSources(environment, prefix)) {
+        for (String each : getDataSourceNames(environment, prefix)) {
             try {
-                Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each, Map.class);
-                Preconditions.checkState(!dataSourceProps.isEmpty(), String.format("Wrong datasource [%s] properties!", each));
-                DataSource dataSource = DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
-                dataSourceMap.put(each, dataSource);
+                dataSourceMap.put(each, getDataSource(environment, prefix, each));
             } catch (final ReflectiveOperationException ex) {
                 throw new ShardingException("Can't find datasource type!", ex);
             }
         }
     }
-
-    private List<String> resolveDataSources(final Environment environment, String prefix) {
+    
+    private List<String> getDataSourceNames(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
         String dataSources = standardEnv.getProperty(prefix + "names");
         if (StringUtils.isEmpty(dataSources)) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         return new InlineExpressionParser(dataSources).splitAndEvaluate();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private DataSource getDataSource(final Environment environment, final String prefix, final String dataSourceName) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + dataSourceName, Map.class);
+        Preconditions.checkState(!dataSourceProps.isEmpty(), String.format("Wrong datasource [%s] properties!", dataSourceName));
+        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
     }
 }

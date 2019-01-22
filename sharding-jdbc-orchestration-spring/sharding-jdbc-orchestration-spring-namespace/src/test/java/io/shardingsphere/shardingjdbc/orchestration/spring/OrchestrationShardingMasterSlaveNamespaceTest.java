@@ -70,7 +70,7 @@ public class OrchestrationShardingMasterSlaveNamespaceTest extends AbstractJUnit
         assertThat(shardingRule.getMasterSlaveRules().iterator().next().getLoadBalanceAlgorithm(), instanceOf(RoundRobinMasterSlaveLoadBalanceAlgorithm.class));
         assertThat(shardingRule.getTableRules().size(), is(1));
         assertThat(shardingRule.getTableRules().iterator().next().getLogicTable(), is("t_order"));
-        assertThat(shardingRule.getDefaultKeyGenerator(), instanceOf(IncrementKeyGenerator.class));
+        assertThat(shardingRule.getDefaultShardingKeyGenerator(), instanceOf(IncrementKeyGenerator.class));
     }
     
     @SuppressWarnings("unchecked")

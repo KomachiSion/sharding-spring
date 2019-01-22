@@ -46,6 +46,7 @@ import java.util.Map;
  * Spring boot sharding and master-slave configuration.
  *
  * @author caohao
+ * @author panjuan
  */
 @Configuration
 @EnableConfigurationProperties({
@@ -82,29 +83,27 @@ public class SpringBootConfiguration implements EnvironmentAware {
     
     @Override
     public final void setEnvironment(final Environment environment) {
-        setDataSourceMap(environment);
-    }
-    
-    @SuppressWarnings("unchecked")
-    private void setDataSourceMap(final Environment environment) {
         String prefix = "sharding.jdbc.datasource.";
-        for (String each : resolveDataSources(environment, prefix)) {
+        for (String each : getDataSourceNames(environment, prefix)) {
             try {
-                Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
-                Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
-                DataSource dataSource = DataSourceUtil
-                    .getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
-                dataSourceMap.put(each, dataSource);
+                dataSourceMap.put(each, getDataSource(environment, prefix, each));
             } catch (final ReflectiveOperationException ex) {
                 throw new ShardingException("Can't find datasource type!", ex);
             }
         }
     }
-
-    private List<String> resolveDataSources(final Environment environment, String prefix) {
+    
+    private List<String> getDataSourceNames(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
         String dataSources = standardEnv.getProperty(prefix + "names");
         return new InlineExpressionParser(dataSources).splitAndEvaluate();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private DataSource getDataSource(final Environment environment, final String prefix, final String dataSourceName) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + dataSourceName.trim(), Map.class);
+        Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
+        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
     }
 }
