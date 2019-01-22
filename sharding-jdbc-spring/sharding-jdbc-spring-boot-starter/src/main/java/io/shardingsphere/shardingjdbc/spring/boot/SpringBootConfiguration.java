@@ -46,6 +46,7 @@ import java.util.Map;
  * Spring boot sharding and master-slave configuration.
  *
  * @author caohao
+ * @author panjuan
  */
 @Configuration
 @EnableConfigurationProperties({
@@ -96,17 +97,17 @@ public class SpringBootConfiguration implements EnvironmentAware {
         }
     }
     
-    @SuppressWarnings("unchecked")
-    private DataSource getDataSource(final Environment environment, final String prefix, final String each) throws ReflectiveOperationException {
-        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
-        Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
-        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
-    }
-    
     private List<String> getDataSourceNames(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
         String dataSources = standardEnv.getProperty(prefix + "names");
         return new InlineExpressionParser(dataSources).splitAndEvaluate();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private DataSource getDataSource(final Environment environment, final String prefix, final String each) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
+        Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
+        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
     }
 }
