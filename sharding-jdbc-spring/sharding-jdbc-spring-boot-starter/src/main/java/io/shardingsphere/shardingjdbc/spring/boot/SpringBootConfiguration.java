@@ -85,23 +85,25 @@ public class SpringBootConfiguration implements EnvironmentAware {
         setDataSourceMap(environment);
     }
     
-    @SuppressWarnings("unchecked")
     private void setDataSourceMap(final Environment environment) {
         String prefix = "sharding.jdbc.datasource.";
-        for (String each : resolveDataSources(environment, prefix)) {
+        for (String each : getDataSourceNames(environment, prefix)) {
             try {
-                Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
-                Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
-                DataSource dataSource = DataSourceUtil
-                    .getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
+                DataSource dataSource = getDataSource(environment, prefix, each);
                 dataSourceMap.put(each, dataSource);
             } catch (final ReflectiveOperationException ex) {
                 throw new ShardingException("Can't find datasource type!", ex);
             }
         }
     }
-
-    private List<String> resolveDataSources(final Environment environment, String prefix) {
+    
+    private DataSource getDataSource(final Environment environment, final String prefix, final String each) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
+        Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
+        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
+    }
+    
+    private List<String> getDataSourceNames(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
         String dataSources = standardEnv.getProperty(prefix + "names");
