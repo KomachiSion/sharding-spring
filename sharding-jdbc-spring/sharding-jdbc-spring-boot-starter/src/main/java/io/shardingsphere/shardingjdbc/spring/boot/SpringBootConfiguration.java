@@ -25,6 +25,7 @@ import io.shardingsphere.shardingjdbc.spring.boot.sharding.SpringBootShardingRul
 import io.shardingsphere.shardingjdbc.spring.boot.util.PropertyUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.core.exception.ShardingException;
+import org.apache.shardingsphere.core.util.InlineExpressionParser;
 import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 import org.apache.shardingsphere.shardingjdbc.util.DataSourceUtil;
@@ -33,10 +34,12 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -85,8 +88,7 @@ public class SpringBootConfiguration implements EnvironmentAware {
     @SuppressWarnings("unchecked")
     private void setDataSourceMap(final Environment environment) {
         String prefix = "sharding.jdbc.datasource.";
-        String dataSources = environment.getProperty(prefix + "names");
-        for (String each : dataSources.split(",")) {
+        for (String each : resolveDataSources(environment, prefix)) {
             try {
                 Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
                 Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
@@ -97,5 +99,12 @@ public class SpringBootConfiguration implements EnvironmentAware {
                 throw new ShardingException("Can't find datasource type!", ex);
             }
         }
+    }
+
+    private List<String> resolveDataSources(final Environment environment, String prefix) {
+        StandardEnvironment standardEnv = (StandardEnvironment) environment;
+        standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
+        String dataSources = standardEnv.getProperty(prefix + "names");
+        return new InlineExpressionParser(dataSources).splitAndEvaluate();
     }
 }

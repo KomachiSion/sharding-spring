@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.core.constant.ShardingConstant;
 import org.apache.shardingsphere.core.exception.ShardingException;
 import org.apache.shardingsphere.core.rule.ShardingRule;
+import org.apache.shardingsphere.core.util.InlineExpressionParser;
 import org.apache.shardingsphere.orchestration.internal.registry.ShardingOrchestrationFacade;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
@@ -40,13 +41,12 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.StandardEnvironment;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Orchestration spring boot sharding and master-slave configuration.
@@ -140,12 +140,7 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
     @SuppressWarnings("unchecked")
     private void setDataSourceMap(final Environment environment) {
         String prefix = "sharding.jdbc.datasource.";
-        String dataSources = environment.getProperty(prefix + "names");
-        if (StringUtils.isEmpty(dataSources)) {
-            return;
-        }
-        dataSources = dataSources.trim();
-        for (String each : dataSources.split(",")) {
+        for (String each : resolveDataSources(environment, prefix)) {
             try {
                 Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each, Map.class);
                 Preconditions.checkState(!dataSourceProps.isEmpty(), String.format("Wrong datasource [%s] properties!", each));
@@ -155,5 +150,15 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
                 throw new ShardingException("Can't find datasource type!", ex);
             }
         }
+    }
+
+    private List<String> resolveDataSources(final Environment environment, String prefix) {
+        StandardEnvironment standardEnv = (StandardEnvironment) environment;
+        standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
+        String dataSources = standardEnv.getProperty(prefix + "names");
+        if (StringUtils.isEmpty(dataSources)) {
+            return Collections.EMPTY_LIST;
+        }
+        return new InlineExpressionParser(dataSources).splitAndEvaluate();
     }
 }
