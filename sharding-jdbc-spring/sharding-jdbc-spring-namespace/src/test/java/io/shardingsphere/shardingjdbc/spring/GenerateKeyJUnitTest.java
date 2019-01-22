@@ -66,7 +66,7 @@ public class GenerateKeyJUnitTest extends AbstractSpringJUnitTest {
         assertNotNull(shardingContext);
         Object shardingRule = FieldValueUtil.getFieldValue(shardingContext, "shardingRule");
         assertNotNull(shardingRule);
-        Object defaultKeyGenerator = FieldValueUtil.getFieldValue(shardingRule, "defaultKeyGenerator");
+        Object defaultKeyGenerator = FieldValueUtil.getFieldValue(shardingRule, "defaultShardingKeyGenerator");
         assertNotNull(defaultKeyGenerator);
         assertTrue(defaultKeyGenerator instanceof IncrementKeyGenerator);
         Object tableRules = FieldValueUtil.getFieldValue(shardingRule, "tableRules");
@@ -77,6 +77,6 @@ public class GenerateKeyJUnitTest extends AbstractSpringJUnitTest {
         assertThat(orderRule.getGenerateKeyColumn(), is("order_id"));
         TableRule orderItemRule = tableRuleIterator.next();
         assertThat(orderItemRule.getGenerateKeyColumn(), is("order_item_id"));
-        assertTrue(orderItemRule.getKeyGenerator() instanceof DecrementKeyGenerator);
+        assertTrue(orderItemRule.getShardingKeyGenerator() instanceof DecrementKeyGenerator);
     }
 }
