@@ -152,12 +152,12 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
         }
     }
 
-    private List<String> resolveDataSources(final Environment environment, String prefix) {
+    private List<String> resolveDataSources(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
         String dataSources = standardEnv.getProperty(prefix + "names");
         if (StringUtils.isEmpty(dataSources)) {
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
         return new InlineExpressionParser(dataSources).splitAndEvaluate();
     }
