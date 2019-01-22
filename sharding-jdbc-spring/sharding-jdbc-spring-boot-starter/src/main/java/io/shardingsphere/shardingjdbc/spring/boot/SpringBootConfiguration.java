@@ -105,8 +105,8 @@ public class SpringBootConfiguration implements EnvironmentAware {
     }
     
     @SuppressWarnings("unchecked")
-    private DataSource getDataSource(final Environment environment, final String prefix, final String each) throws ReflectiveOperationException {
-        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each.trim(), Map.class);
+    private DataSource getDataSource(final Environment environment, final String prefix, final String dataSourceName) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + dataSourceName.trim(), Map.class);
         Preconditions.checkState(!dataSourceProps.isEmpty(), "Wrong datasource properties!");
         return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
     }

@@ -151,13 +151,6 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
         }
     }
     
-    @SuppressWarnings("unchecked")
-    private DataSource getDataSource(final Environment environment, final String prefix, final String each) throws ReflectiveOperationException {
-        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + each, Map.class);
-        Preconditions.checkState(!dataSourceProps.isEmpty(), String.format("Wrong datasource [%s] properties!", each));
-        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
-    }
-    
     private List<String> getDataSourceNames(final Environment environment, final String prefix) {
         StandardEnvironment standardEnv = (StandardEnvironment) environment;
         standardEnv.setIgnoreUnresolvableNestedPlaceholders(true);
@@ -166,5 +159,12 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
             return Collections.emptyList();
         }
         return new InlineExpressionParser(dataSources).splitAndEvaluate();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private DataSource getDataSource(final Environment environment, final String prefix, final String dataSourceName) throws ReflectiveOperationException {
+        Map<String, Object> dataSourceProps = PropertyUtil.handle(environment, prefix + dataSourceName, Map.class);
+        Preconditions.checkState(!dataSourceProps.isEmpty(), String.format("Wrong datasource [%s] properties!", dataSourceName));
+        return DataSourceUtil.getDataSource(dataSourceProps.get("type").toString(), dataSourceProps);
     }
 }
