@@ -79,7 +79,7 @@ public class OrchestrationShardingNamespaceTest extends AbstractJUnit4SpringCont
                 new String[]{applicationContext.getBean("standardStrategy", StandardShardingStrategyConfiguration.class).getShardingColumn()}));
         assertTrue(Arrays.equals(shardingRule.getDefaultTableShardingStrategy().getShardingColumns().toArray(new String[]{}),
                 new String[]{applicationContext.getBean("inlineStrategy", InlineShardingStrategyConfiguration.class).getShardingColumn()}));
-        assertThat(shardingRule.getDefaultKeyGenerator().getClass().getName(), is(IncrementKeyGenerator.class.getCanonicalName()));
+        assertThat(shardingRule.getDefaultShardingKeyGenerator().getClass().getName(), is(IncrementKeyGenerator.class.getCanonicalName()));
     }
     
     @Test
@@ -102,7 +102,7 @@ public class OrchestrationShardingNamespaceTest extends AbstractJUnit4SpringCont
         assertTrue(Arrays.equals(tableRule.getTableShardingStrategy().getShardingColumns().toArray(new String[]{}),
                 new String[]{applicationContext.getBean("inlineStrategy", InlineShardingStrategyConfiguration.class).getShardingColumn()}));
         assertThat(tableRule.getGenerateKeyColumn(), is("order_id"));
-        assertThat(tableRule.getKeyGenerator().getClass().getName(), is(IncrementKeyGenerator.class.getCanonicalName()));
+        assertThat(tableRule.getShardingKeyGenerator().getClass().getName(), is(IncrementKeyGenerator.class.getCanonicalName()));
     }
     
     @Test
