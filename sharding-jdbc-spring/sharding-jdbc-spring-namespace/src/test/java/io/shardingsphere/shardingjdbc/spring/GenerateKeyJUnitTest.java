@@ -1,9 +1,10 @@
 /*
- * Copyright 2016-2018 shardingsphere.io.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -12,16 +13,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * </p>
  */
 
 package io.shardingsphere.shardingjdbc.spring;
 
-import io.shardingsphere.core.rule.TableRule;
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import io.shardingsphere.shardingjdbc.spring.fixture.DecrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.fixture.IncrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.util.FieldValueUtil;
+import org.apache.shardingsphere.core.rule.TableRule;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -66,7 +66,7 @@ public class GenerateKeyJUnitTest extends AbstractSpringJUnitTest {
         assertNotNull(shardingContext);
         Object shardingRule = FieldValueUtil.getFieldValue(shardingContext, "shardingRule");
         assertNotNull(shardingRule);
-        Object defaultKeyGenerator = FieldValueUtil.getFieldValue(shardingRule, "defaultKeyGenerator");
+        Object defaultKeyGenerator = FieldValueUtil.getFieldValue(shardingRule, "defaultShardingKeyGenerator");
         assertNotNull(defaultKeyGenerator);
         assertTrue(defaultKeyGenerator instanceof IncrementKeyGenerator);
         Object tableRules = FieldValueUtil.getFieldValue(shardingRule, "tableRules");
@@ -77,6 +77,6 @@ public class GenerateKeyJUnitTest extends AbstractSpringJUnitTest {
         assertThat(orderRule.getGenerateKeyColumn(), is("order_id"));
         TableRule orderItemRule = tableRuleIterator.next();
         assertThat(orderItemRule.getGenerateKeyColumn(), is("order_item_id"));
-        assertTrue(orderItemRule.getKeyGenerator() instanceof DecrementKeyGenerator);
+        assertTrue(orderItemRule.getShardingKeyGenerator() instanceof DecrementKeyGenerator);
     }
 }

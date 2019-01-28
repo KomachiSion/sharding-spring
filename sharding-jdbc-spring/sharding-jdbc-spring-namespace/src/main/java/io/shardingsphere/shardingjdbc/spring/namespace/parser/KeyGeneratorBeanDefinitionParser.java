@@ -17,20 +17,31 @@
 
 package io.shardingsphere.shardingjdbc.spring.namespace.parser;
 
+import com.google.common.base.Strings;
+import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
+import org.apache.shardingsphere.api.config.KeyGeneratorConfiguration;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 /**
- * Sharding strategy bean parser for spring namespace.
+ * Key generator bean parser for spring namespace.
  *®
- * @author caohao
+ * @author panjuan
  */
-public final class ShardingStrategyBeanDefinitionParser extends AbstractBeanDefinitionParser {
+public final class KeyGeneratorBeanDefinitionParser extends AbstractBeanDefinitionParser {
     
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
-        return ShardingStrategyBeanDefinition.getBeanDefinitionByElement(element);
+        BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(KeyGeneratorConfiguration.class);
+        factory.addPropertyValue("column", element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));
+        factory.addPropertyValue("type", element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
+        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(properties)) {
+            factory.addPropertyReference("props", properties);
+        }
+        return factory.getBeanDefinition();
     }
 }

@@ -1,9 +1,10 @@
 /*
- * Copyright 2016-2018 shardingsphere.io.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -12,22 +13,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * </p>
  */
 
 package io.shardingsphere.shardingjdbc.spring.boot.type;
 
-import io.shardingsphere.api.ConfigMapContext;
-import io.shardingsphere.core.constant.properties.ShardingProperties;
-import io.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
-import io.shardingsphere.core.routing.strategy.inline.InlineShardingStrategy;
-import io.shardingsphere.core.rule.DataNode;
-import io.shardingsphere.core.rule.ShardingRule;
-import io.shardingsphere.core.rule.TableRule;
-import io.shardingsphere.shardingjdbc.jdbc.core.ShardingContext;
-import io.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import lombok.SneakyThrows;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.shardingsphere.api.ConfigMapContext;
+import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
+import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
+import org.apache.shardingsphere.core.routing.strategy.inline.InlineShardingStrategy;
+import org.apache.shardingsphere.core.rule.DataNode;
+import org.apache.shardingsphere.core.rule.ShardingRule;
+import org.apache.shardingsphere.core.rule.TableRule;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.ShardingContext;
+import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -95,7 +95,7 @@ public class SpringBootShardingTest {
         ShardingContext shardingContext = getFieldValue("shardingContext", ShardingDataSource.class, dataSource);
         ShardingRule shardingRule = shardingContext.getShardingRule();
         assertThat(shardingRule.getTableRules().size(), is(2));
-        TableRule tableRule1 = ((LinkedList<TableRule>) shardingRule.getTableRules()).get(0);
+        TableRule tableRule1 = (new LinkedList<>(shardingRule.getTableRules())).get(0);
         assertThat(tableRule1.getLogicTable(), is("t_order"));
         assertThat(tableRule1.getActualDataNodes().size(), is(4));
         assertTrue(tableRule1.getActualDataNodes().contains(new DataNode("ds_0", "t_order_0")));
@@ -105,7 +105,7 @@ public class SpringBootShardingTest {
         assertThat(tableRule1.getTableShardingStrategy(), instanceOf(InlineShardingStrategy.class));
         assertThat(tableRule1.getTableShardingStrategy().getShardingColumns().iterator().next(), is("order_id"));
         assertThat(tableRule1.getGenerateKeyColumn(), is("order_id"));
-        TableRule tableRule2 = ((LinkedList<TableRule>) shardingRule.getTableRules()).get(1);
+        TableRule tableRule2 = (new LinkedList<>(shardingRule.getTableRules())).get(1);
         assertThat(tableRule2.getLogicTable(), is("t_order_item"));
         assertThat(tableRule2.getActualDataNodes().size(), is(4));
         assertTrue(tableRule2.getActualDataNodes().contains(new DataNode("ds_0", "t_order_item_0")));
@@ -122,7 +122,7 @@ public class SpringBootShardingTest {
         ShardingContext shardingContext = getFieldValue("shardingContext", ShardingDataSource.class, dataSource);
         ShardingRule shardingRule = shardingContext.getShardingRule();
         assertThat(shardingRule.getBindingTableRules().size(), is(2));
-        TableRule tableRule1 = ((LinkedList<TableRule>) shardingRule.getTableRules()).get(0);
+        TableRule tableRule1 = (new LinkedList<>(shardingRule.getTableRules())).get(0);
         assertThat(tableRule1.getLogicTable(), is("t_order"));
         assertThat(tableRule1.getActualDataNodes().size(), is(4));
         assertTrue(tableRule1.getActualDataNodes().contains(new DataNode("ds_0", "t_order_0")));
@@ -132,7 +132,7 @@ public class SpringBootShardingTest {
         assertThat(tableRule1.getTableShardingStrategy(), instanceOf(InlineShardingStrategy.class));
         assertThat(tableRule1.getTableShardingStrategy().getShardingColumns().iterator().next(), is("order_id"));
         assertThat(tableRule1.getGenerateKeyColumn(), is("order_id"));
-        TableRule tableRule2 = ((LinkedList<TableRule>) shardingRule.getTableRules()).get(1);
+        TableRule tableRule2 = (new LinkedList<>(shardingRule.getTableRules())).get(1);
         assertThat(tableRule2.getLogicTable(), is("t_order_item"));
         assertThat(tableRule2.getActualDataNodes().size(), is(4));
         assertTrue(tableRule2.getActualDataNodes().contains(new DataNode("ds_0", "t_order_item_0")));

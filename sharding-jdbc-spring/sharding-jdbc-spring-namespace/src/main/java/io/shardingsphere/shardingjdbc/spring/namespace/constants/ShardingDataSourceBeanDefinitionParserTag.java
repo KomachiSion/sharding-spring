@@ -1,9 +1,10 @@
 /*
- * Copyright 2016-2018 shardingsphere.io.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -12,7 +13,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * </p>
  */
 
 package io.shardingsphere.shardingjdbc.spring.namespace.constants;
@@ -24,6 +24,7 @@ import lombok.NoArgsConstructor;
  * Sharding data source parser tag constants.
  * 
  * @author caohao
+ * @author panjuan
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShardingDataSourceBeanDefinitionParserTag {
@@ -72,11 +73,17 @@ public final class ShardingDataSourceBeanDefinitionParserTag {
     
     public static final String DEFAULT_TABLE_STRATEGY_REF_ATTRIBUTE = "default-table-strategy-ref";
     
-    public static final String GENERATE_KEY_COLUMN_NAME_ATTRIBUTE = "generate-key-column-name";
+    public static final String DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE = "default-key-generator-ref";
     
     public static final String KEY_GENERATOR_REF_ATTRIBUTE = "key-generator-ref";
     
-    public static final String DEFAULT_KEY_GENERATOR_REF_ATTRIBUTE = "default-key-generator-ref";
+    public static final String KEY_GENERATOR_REF_TAG = "key-generator";
+    
+    public static final String GENERATE_KEY_COLUMN_ATTRIBUTE = "column";
+    
+    public static final String GENERATE_KEY_TYPE_ATTRIBUTE = "type";
+    
+    public static final String GENERATE_KEY_PROPERTY_REF_ATTRIBUTE = "props-ref";
     
     public static final String LOGIC_INDEX = "logic-index";
 }
