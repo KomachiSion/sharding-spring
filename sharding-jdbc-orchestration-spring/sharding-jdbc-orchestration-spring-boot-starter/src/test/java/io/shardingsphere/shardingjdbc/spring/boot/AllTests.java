@@ -19,12 +19,15 @@ package io.shardingsphere.shardingjdbc.spring.boot;
 
 import io.shardingsphere.shardingjdbc.spring.boot.type.OrchestrationSpringBootMasterSlaveTest;
 import io.shardingsphere.shardingjdbc.spring.boot.type.OrchestrationSpringBootShardingTest;
+import io.shardingsphere.shardingjdbc.spring.boot.util.DataSourceUtilTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+        DataSourceUtilTest.class,
         OrchestrationSpringBootMasterSlaveTest.class,
         OrchestrationSpringBootShardingTest.class 
     })
