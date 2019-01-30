@@ -26,6 +26,8 @@ import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.Properties;
+
 /**
  * Key generator bean parser for spring namespace.
  *®
@@ -36,11 +38,13 @@ public final class KeyGeneratorBeanDefinitionParser extends AbstractBeanDefiniti
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(KeyGeneratorConfiguration.class);
-        factory.addPropertyValue("column", element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));
-        factory.addPropertyValue("type", element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
+        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));
+        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
         String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(properties)) {
-            factory.addPropertyReference("props", properties);
+            factory.addConstructorArgReference(properties);
+        } else {
+            factory.addConstructorArgValue(new Properties());
         }
         return factory.getBeanDefinition();
     }
