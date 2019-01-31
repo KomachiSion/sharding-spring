@@ -42,12 +42,7 @@ public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionP
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_TYPE_ATTRIBUTE));
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_COLUMNS_ATTRIBUTE));
         parseAssistedQueryColumns(element, factory);
-        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_PROPERTY_REF_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(properties)) {
-            factory.addConstructorArgReference(properties);
-        } else {
-            factory.addConstructorArgValue(new Properties());
-        }
+        parseProperties(element, factory);
         return factory.getBeanDefinition();
     }
     
@@ -57,6 +52,15 @@ public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionP
             factory.addConstructorArgReference(assistedQueryColumns);
         } else {
             factory.addConstructorArgValue(new LinkedList<>());
+        }
+    }
+    
+    private void parseProperties(final Element element, final BeanDefinitionBuilder factory) {
+        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_PROPERTY_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(properties)) {
+            factory.addConstructorArgReference(properties);
+        } else {
+            factory.addConstructorArgValue(new Properties());
         }
     }
 }
