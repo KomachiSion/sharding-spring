@@ -190,11 +190,15 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         if (!Strings.isNullOrEmpty(encryptor)) {
             factory.addPropertyReference("encryptorConfig", encryptor);
         }
+        parseLogicIndex(tableElement, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseLogicIndex(final Element tableElement, final BeanDefinitionBuilder factory) {
         String logicIndex = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_INDEX);
         if (!Strings.isNullOrEmpty(logicIndex)) {
             factory.addPropertyValue("logicIndex", logicIndex);
         }
-        return factory.getBeanDefinition();
     }
     
     private List<String> parseBindingTablesConfig(final Element element) {
