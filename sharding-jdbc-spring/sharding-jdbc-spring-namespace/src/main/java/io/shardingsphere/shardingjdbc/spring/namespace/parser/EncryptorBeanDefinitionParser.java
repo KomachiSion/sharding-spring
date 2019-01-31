@@ -41,12 +41,7 @@ public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionP
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(EncryptorConfiguration.class);
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_TYPE_ATTRIBUTE));
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_COLUMNS_ATTRIBUTE));
-        String assistedQueryColumns = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_ASSISTED_QUERY_COLUMNS_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(assistedQueryColumns)) {
-            factory.addConstructorArgReference(assistedQueryColumns);
-        } else {
-            factory.addConstructorArgValue(new LinkedList<>());
-        }
+        parseAssistedQueryColumns(element, factory);
         String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_PROPERTY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(properties)) {
             factory.addConstructorArgReference(properties);
@@ -54,5 +49,14 @@ public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionP
             factory.addConstructorArgValue(new Properties());
         }
         return factory.getBeanDefinition();
+    }
+    
+    private void parseAssistedQueryColumns(final Element element, final BeanDefinitionBuilder factory) {
+        String assistedQueryColumns = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_ASSISTED_QUERY_COLUMNS_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(assistedQueryColumns)) {
+            factory.addConstructorArgReference(assistedQueryColumns);
+        } else {
+            factory.addConstructorArgValue(new LinkedList<>());
+        }
     }
 }
