@@ -19,33 +19,44 @@ package io.shardingsphere.shardingjdbc.spring.namespace.parser;
 
 import com.google.common.base.Strings;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
-import org.apache.shardingsphere.api.config.KeyGeneratorConfiguration;
+import org.apache.shardingsphere.api.config.EncryptorConfiguration;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import java.util.LinkedList;
 import java.util.Properties;
 
 /**
- * Key generator bean parser for spring namespace.
+ * Encryptor bean parser for spring namespace.
  *®
  * @author panjuan
  */
-public final class KeyGeneratorBeanDefinitionParser extends AbstractBeanDefinitionParser {
+public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionParser {
     
     @Override
     protected AbstractBeanDefinition parseInternal(final Element element, final ParserContext parserContext) {
-        BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(KeyGeneratorConfiguration.class);
-        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));
-        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
+        BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(EncryptorConfiguration.class);
+        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_TYPE_ATTRIBUTE));
+        factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_COLUMNS_ATTRIBUTE));
+        parseAssistedQueryColumns(element, factory);
         parseProperties(element, factory);
         return factory.getBeanDefinition();
     }
     
+    private void parseAssistedQueryColumns(final Element element, final BeanDefinitionBuilder factory) {
+        String assistedQueryColumns = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_ASSISTED_QUERY_COLUMNS_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(assistedQueryColumns)) {
+            factory.addConstructorArgValue(assistedQueryColumns);
+        } else {
+            factory.addConstructorArgValue(new LinkedList<>());
+        }
+    }
+    
     private void parseProperties(final Element element, final BeanDefinitionBuilder factory) {
-        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE);
+        String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_PROPERTY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(properties)) {
             factory.addConstructorArgReference(properties);
         } else {

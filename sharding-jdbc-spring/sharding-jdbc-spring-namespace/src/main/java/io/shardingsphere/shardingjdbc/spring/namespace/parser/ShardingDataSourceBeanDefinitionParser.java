@@ -134,13 +134,17 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         factory.addPropertyValue("masterDataSourceName", masterSlaveElement.getAttribute(
             MasterSlaveDataSourceBeanDefinitionParserTag.MASTER_DATA_SOURCE_NAME_ATTRIBUTE));
         factory.addPropertyValue("slaveDataSourceNames", parseSlaveDataSourcesRef(masterSlaveElement));
+        parseMasterSlaveRuleStrategy(masterSlaveElement, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseMasterSlaveRuleStrategy(final Element masterSlaveElement, final BeanDefinitionBuilder factory) {
         String strategyRef = masterSlaveElement.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(strategyRef)) {
             factory.addPropertyReference("loadBalanceAlgorithm", strategyRef);
         } else {
             factory.addPropertyValue("loadBalanceAlgorithm", parseStrategyType(masterSlaveElement).getAlgorithm());
         }
-        return factory.getBeanDefinition();
     }
     
     private MasterSlaveLoadBalanceAlgorithmType parseStrategyType(final Element element) {
@@ -170,27 +174,55 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     private BeanDefinition parseTableRuleConfig(final Element tableElement) {
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(TableRuleConfiguration.class);
         factory.addPropertyValue("logicTable", tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_TABLE_ATTRIBUTE));
+        parseActualDataNodes(tableElement, factory);
+        parseDatabaseShardingStrategyConfig(tableElement, factory);
+        parseTableShardingStrategyConfig(tableElement, factory);
+        parseKeyGeneratorConfig(tableElement, factory);
+        parseEncryptorConfig(tableElement, factory);
+        parseLogicIndex(tableElement, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseActualDataNodes(final Element tableElement, final BeanDefinitionBuilder factory) {
         String actualDataNodes = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ACTUAL_DATA_NODES_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(actualDataNodes)) {
             factory.addPropertyValue("actualDataNodes", actualDataNodes);
         }
+    }
+    
+    private void parseDatabaseShardingStrategyConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String databaseStrategy = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DATABASE_STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(databaseStrategy)) {
             factory.addPropertyReference("databaseShardingStrategyConfig", databaseStrategy);
         }
+    }
+    
+    private void parseTableShardingStrategyConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String tableStrategy = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.TABLE_STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(tableStrategy)) {
             factory.addPropertyReference("tableShardingStrategyConfig", tableStrategy);
         }
+    }
+    
+    private void parseKeyGeneratorConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String keyGenerator = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.KEY_GENERATOR_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(keyGenerator)) {
             factory.addPropertyReference("keyGeneratorConfig", keyGenerator);
         }
+    }
+    
+    private void parseEncryptorConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
+        String encryptor = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(encryptor)) {
+            factory.addPropertyReference("encryptorConfig", encryptor);
+        }
+    }
+    
+    private void parseLogicIndex(final Element tableElement, final BeanDefinitionBuilder factory) {
         String logicIndex = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_INDEX);
         if (!Strings.isNullOrEmpty(logicIndex)) {
             factory.addPropertyValue("logicIndex", logicIndex);
         }
-        return factory.getBeanDefinition();
     }
     
     private List<String> parseBindingTablesConfig(final Element element) {

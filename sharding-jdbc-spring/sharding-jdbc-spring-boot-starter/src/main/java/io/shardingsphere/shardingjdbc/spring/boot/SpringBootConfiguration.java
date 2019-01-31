@@ -75,10 +75,8 @@ public class SpringBootConfiguration implements EnvironmentAware {
     @Bean
     public DataSource dataSource() throws SQLException {
         return null == masterSlaveProperties.getMasterDataSourceName()
-                ? ShardingDataSourceFactory
-            .createDataSource(dataSourceMap, shardingProperties.getShardingRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps())
-                : MasterSlaveDataSourceFactory.createDataSource(
-                        dataSourceMap, masterSlaveProperties.getMasterSlaveRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps());
+                ? ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingProperties.getShardingRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps())
+                : MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveProperties.getMasterSlaveRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps());
     }
     
     @Override
