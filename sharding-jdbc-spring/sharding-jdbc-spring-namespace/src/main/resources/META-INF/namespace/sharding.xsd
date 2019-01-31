@@ -44,6 +44,7 @@
             <xsd:attribute name="database-strategy-ref" type="xsd:string" />
             <xsd:attribute name="table-strategy-ref" type="xsd:string" />
             <xsd:attribute name="key-generator-ref" type="xsd:string" />
+            <xsd:attribute name="encryptor-ref" type="xsd:string" />
             <xsd:attribute name="logic-index" type="xsd:string" />
         </xsd:complexType>
     </xsd:element>
@@ -126,6 +127,15 @@
             <xsd:attribute name="id" type="xsd:string" use="required" />
             <xsd:attribute name="column" type="xsd:string" />
             <xsd:attribute name="type" type="xsd:string" />
+            <xsd:attribute name="props-ref" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="encryptor">
+        <xsd:complexType>
+            <xsd:attribute name="id" type="xsd:string" use="required" />
+            <xsd:attribute name="type" type="xsd:string" />
+            <xsd:attribute name="columns" type="xsd:string" />
+            <xsd:attribute name="assisted-query-columns" type="xsd:string" />
             <xsd:attribute name="props-ref" type="xsd:string" />
         </xsd:complexType>
     </xsd:element>
