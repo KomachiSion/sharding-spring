@@ -178,20 +178,32 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         if (!Strings.isNullOrEmpty(databaseStrategy)) {
             factory.addPropertyReference("databaseShardingStrategyConfig", databaseStrategy);
         }
+        parseTableShardingStrategyConfig(tableElement, factory);
+        parseKeyGeneratorConfig(tableElement, factory);
+        parseEncryptorConfig(tableElement, factory);
+        parseLogicIndex(tableElement, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseTableShardingStrategyConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String tableStrategy = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.TABLE_STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(tableStrategy)) {
             factory.addPropertyReference("tableShardingStrategyConfig", tableStrategy);
         }
+    }
+    
+    private void parseKeyGeneratorConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String keyGenerator = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.KEY_GENERATOR_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(keyGenerator)) {
             factory.addPropertyReference("keyGeneratorConfig", keyGenerator);
         }
+    }
+    
+    private void parseEncryptorConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
         String encryptor = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(encryptor)) {
             factory.addPropertyReference("encryptorConfig", encryptor);
         }
-        parseLogicIndex(tableElement, factory);
-        return factory.getBeanDefinition();
     }
     
     private void parseLogicIndex(final Element tableElement, final BeanDefinitionBuilder factory) {
