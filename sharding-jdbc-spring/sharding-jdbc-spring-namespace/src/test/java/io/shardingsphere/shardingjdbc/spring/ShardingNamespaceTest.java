@@ -115,6 +115,10 @@ public class ShardingNamespaceTest extends AbstractJUnit4SpringContextTests {
         ShardingRule shardingRule = getShardingRule("simpleShardingDataSource");
         assertThat(shardingRule.getTableRules().size(), is(1));
         assertThat(shardingRule.getTableRules().iterator().next().getLogicTable(), is("t_order"));
+        TableRule tableRule = shardingRule.getTableRule("t_order");
+        assertThat(tableRule.getShardingEncryptorStrategy().getColumns().size(), is(2));
+        assertThat(tableRule.getShardingEncryptorStrategy().getAssistedQueryColumns().iterator().next(), is("pwd1_index"));
+        assertThat(tableRule.getShardingEncryptorStrategy().getShardingEncryptor().getProperties().getProperty("appToken"), is("business"));
     }
     
     @Test
