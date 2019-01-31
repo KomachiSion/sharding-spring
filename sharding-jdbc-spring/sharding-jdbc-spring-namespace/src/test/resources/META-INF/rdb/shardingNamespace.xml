@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xmlns:sharding="http://shardingsphere.io/schema/shardingsphere/sharding" 
-    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sharding="http://shardingsphere.io/schema/shardingsphere/sharding"
+       xmlns:bean="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
                         http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://shardingsphere.io/schema/shardingsphere/sharding 
-                        http://shardingsphere.io/schema/shardingsphere/sharding/sharding.xsd 
-                        ">
+                        http://shardingsphere.io/schema/shardingsphere/sharding/sharding.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <import resource="datasource/dataSource.xml" />
     <import resource="datasource/masterSlaveDataSource.xml" />
 
@@ -27,10 +27,15 @@
     <sharding:key-generator id="defaultKeyGenerator" type="INCREMENT" />
     <sharding:key-generator id="orderKeyGenerator" type="INCREMENT" column="order_id" />
     
+    <bean:properties id="dataProtectorProps">
+        <prop key="appToken">business</prop>
+    </bean:properties>
+    <sharding:encryptor id="encryptor" type="test" columns="pwd1, pwd2" assisted-query-columns="pwd1_index, pwd2_index" props-ref="dataProtectorProps" />
+    
     <sharding:data-source id="simpleShardingDataSource">
         <sharding:sharding-rule data-source-names="dbtbl_0">
             <sharding:table-rules>
-                <sharding:table-rule logic-table="t_order" />
+                <sharding:table-rule logic-table="t_order" encryptor-ref="encryptor" />
             </sharding:table-rules>
         </sharding:sharding-rule>
     </sharding:data-source>
