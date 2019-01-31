@@ -54,8 +54,6 @@ import static org.junit.Assert.assertTrue;
 @ActiveProfiles("sharding")
 public class SpringBootShardingTest {
     
-    private ShardingContext shardingContext;
-    
     @Resource
     private DataSource dataSource;
     
@@ -78,6 +76,9 @@ public class SpringBootShardingTest {
         ShardingProperties shardingProperties = shardingContext.getShardingProperties();
         assertTrue((Boolean) shardingProperties.getValue(ShardingPropertiesConstant.SQL_SHOW));
         assertThat((Integer) shardingProperties.getValue(ShardingPropertiesConstant.EXECUTOR_SIZE), is(100));
+        assertThat(shardingContext.getShardingRule().getTableRule("t_order").getShardingEncryptorStrategy().getColumns().size(), is(2));
+        assertThat(shardingContext.getShardingRule().getTableRule("t_order").getShardingEncryptorStrategy().getAssistedQueryColumns().size(), is(0));
+        assertThat(shardingContext.getShardingRule().getTableRule("t_order").getShardingEncryptorStrategy().getShardingEncryptor().getProperties().getProperty("appToken"), is("business"));
     }
     
     @Test
