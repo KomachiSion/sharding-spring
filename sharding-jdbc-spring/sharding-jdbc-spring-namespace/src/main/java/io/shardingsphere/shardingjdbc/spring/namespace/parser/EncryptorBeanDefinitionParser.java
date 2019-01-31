@@ -49,7 +49,7 @@ public final class EncryptorBeanDefinitionParser extends AbstractBeanDefinitionP
     private void parseAssistedQueryColumns(final Element element, final BeanDefinitionBuilder factory) {
         String assistedQueryColumns = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_ASSISTED_QUERY_COLUMNS_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(assistedQueryColumns)) {
-            factory.addConstructorArgReference(assistedQueryColumns);
+            factory.addConstructorArgValue(assistedQueryColumns);
         } else {
             factory.addConstructorArgValue(new LinkedList<>());
         }
