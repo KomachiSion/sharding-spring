@@ -170,19 +170,27 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     private BeanDefinition parseTableRuleConfig(final Element tableElement) {
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(TableRuleConfiguration.class);
         factory.addPropertyValue("logicTable", tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_TABLE_ATTRIBUTE));
-        String actualDataNodes = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ACTUAL_DATA_NODES_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(actualDataNodes)) {
-            factory.addPropertyValue("actualDataNodes", actualDataNodes);
-        }
-        String databaseStrategy = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DATABASE_STRATEGY_REF_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(databaseStrategy)) {
-            factory.addPropertyReference("databaseShardingStrategyConfig", databaseStrategy);
-        }
+        parseActualDataNodes(tableElement, factory);
+        parseDatabaseShardingStrategyConfig(tableElement, factory);
         parseTableShardingStrategyConfig(tableElement, factory);
         parseKeyGeneratorConfig(tableElement, factory);
         parseEncryptorConfig(tableElement, factory);
         parseLogicIndex(tableElement, factory);
         return factory.getBeanDefinition();
+    }
+    
+    private void parseActualDataNodes(final Element tableElement, final BeanDefinitionBuilder factory) {
+        String actualDataNodes = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ACTUAL_DATA_NODES_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(actualDataNodes)) {
+            factory.addPropertyValue("actualDataNodes", actualDataNodes);
+        }
+    }
+    
+    private void parseDatabaseShardingStrategyConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
+        String databaseStrategy = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.DATABASE_STRATEGY_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(databaseStrategy)) {
+            factory.addPropertyReference("databaseShardingStrategyConfig", databaseStrategy);
+        }
     }
     
     private void parseTableShardingStrategyConfig(final Element tableElement, final BeanDefinitionBuilder factory) {
