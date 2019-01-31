@@ -186,6 +186,10 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         if (!Strings.isNullOrEmpty(keyGenerator)) {
             factory.addPropertyReference("keyGeneratorConfig", keyGenerator);
         }
+        String encryptor = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ENCRYPTOR_REF_ATTRIBUTE);
+        if (!Strings.isNullOrEmpty(encryptor)) {
+            factory.addPropertyReference("encryptorConfig", encryptor);
+        }
         String logicIndex = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_INDEX);
         if (!Strings.isNullOrEmpty(logicIndex)) {
             factory.addPropertyValue("logicIndex", logicIndex);
