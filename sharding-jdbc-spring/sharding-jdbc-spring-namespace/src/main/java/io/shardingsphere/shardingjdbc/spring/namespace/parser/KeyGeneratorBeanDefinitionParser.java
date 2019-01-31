@@ -40,12 +40,16 @@ public final class KeyGeneratorBeanDefinitionParser extends AbstractBeanDefiniti
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(KeyGeneratorConfiguration.class);
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_COLUMN_ATTRIBUTE));
         factory.addConstructorArgValue(element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_TYPE_ATTRIBUTE));
+        parseProperties(element, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseProperties(final Element element, final BeanDefinitionBuilder factory) {
         String properties = element.getAttribute(ShardingDataSourceBeanDefinitionParserTag.GENERATE_KEY_PROPERTY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(properties)) {
             factory.addConstructorArgReference(properties);
         } else {
             factory.addConstructorArgValue(new Properties());
         }
-        return factory.getBeanDefinition();
     }
 }
