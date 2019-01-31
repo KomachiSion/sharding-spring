@@ -134,13 +134,17 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
         factory.addPropertyValue("masterDataSourceName", masterSlaveElement.getAttribute(
             MasterSlaveDataSourceBeanDefinitionParserTag.MASTER_DATA_SOURCE_NAME_ATTRIBUTE));
         factory.addPropertyValue("slaveDataSourceNames", parseSlaveDataSourcesRef(masterSlaveElement));
+        parseMasterSlaveRuleStrategy(masterSlaveElement, factory);
+        return factory.getBeanDefinition();
+    }
+    
+    private void parseMasterSlaveRuleStrategy(final Element masterSlaveElement, final BeanDefinitionBuilder factory) {
         String strategyRef = masterSlaveElement.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.STRATEGY_REF_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(strategyRef)) {
             factory.addPropertyReference("loadBalanceAlgorithm", strategyRef);
         } else {
             factory.addPropertyValue("loadBalanceAlgorithm", parseStrategyType(masterSlaveElement).getAlgorithm());
         }
-        return factory.getBeanDefinition();
     }
     
     private MasterSlaveLoadBalanceAlgorithmType parseStrategyType(final Element element) {
