@@ -17,7 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.orchestration.spring.boot.sharding;
 
-import org.apache.shardingsphere.core.yaml.sharding.YamlShardingRuleConfiguration;
+import org.apache.shardingsphere.core.yaml.config.sharding.YamlShardingRuleConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

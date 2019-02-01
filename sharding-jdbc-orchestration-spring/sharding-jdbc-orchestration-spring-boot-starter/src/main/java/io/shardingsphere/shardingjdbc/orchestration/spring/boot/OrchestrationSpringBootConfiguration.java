@@ -31,7 +31,10 @@ import org.apache.shardingsphere.core.constant.ShardingConstant;
 import org.apache.shardingsphere.core.exception.ShardingException;
 import org.apache.shardingsphere.core.rule.ShardingRule;
 import org.apache.shardingsphere.core.util.InlineExpressionParser;
+import org.apache.shardingsphere.core.yaml.swapper.impl.MasterSlaveRuleConfigurationYamlSwapper;
+import org.apache.shardingsphere.core.yaml.swapper.impl.ShardingRuleConfigurationYamlSwapper;
 import org.apache.shardingsphere.orchestration.internal.registry.ShardingOrchestrationFacade;
+import org.apache.shardingsphere.orchestration.yaml.swapper.OrchestrationConfigurationYamlSwapper;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.ShardingDataSource;
 import org.apache.shardingsphere.shardingjdbc.orchestration.internal.datasource.OrchestrationMasterSlaveDataSource;
@@ -77,6 +80,12 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
     
     private final SpringBootOrchestrationConfigurationProperties orchestrationProperties;
     
+    private final ShardingRuleConfigurationYamlSwapper shardingSwapper = new ShardingRuleConfigurationYamlSwapper();
+    
+    private final MasterSlaveRuleConfigurationYamlSwapper masterSlaveSwapper = new MasterSlaveRuleConfigurationYamlSwapper();
+    
+    private final OrchestrationConfigurationYamlSwapper orchestrationSwapper = new OrchestrationConfigurationYamlSwapper();
+    
     /**
      * Get data source bean.
      * 
@@ -112,27 +121,27 @@ public class OrchestrationSpringBootConfiguration implements EnvironmentAware {
     
     private boolean isShardingRuleByRegistry() {
         try (ShardingOrchestrationFacade shardingOrchestrationFacade = new ShardingOrchestrationFacade(
-                orchestrationProperties.getOrchestrationConfiguration(), Collections.singletonList(ShardingConstant.LOGIC_SCHEMA_NAME))) {
+                orchestrationSwapper.swap(orchestrationProperties), Collections.singletonList(ShardingConstant.LOGIC_SCHEMA_NAME))) {
             return shardingOrchestrationFacade.getConfigService().isShardingRule(ShardingConstant.LOGIC_SCHEMA_NAME);
         }
     }
     
     private DataSource createShardingDataSource() throws SQLException {
         if (shardingProperties.getTables().isEmpty()) {
-            return new OrchestrationShardingDataSource(orchestrationProperties.getOrchestrationConfiguration());
+            return new OrchestrationShardingDataSource(orchestrationSwapper.swap(orchestrationProperties));
         }
         ShardingDataSource shardingDataSource = new ShardingDataSource(
-                dataSourceMap, new ShardingRule(shardingProperties.getShardingRuleConfiguration(), dataSourceMap.keySet()), configMapProperties.getConfigMap(), propProperties.getProps());
-        return new OrchestrationShardingDataSource(shardingDataSource, orchestrationProperties.getOrchestrationConfiguration());
+                dataSourceMap, new ShardingRule(shardingSwapper.swap(shardingProperties), dataSourceMap.keySet()), configMapProperties.getConfigMap(), propProperties.getProps());
+        return new OrchestrationShardingDataSource(shardingDataSource, orchestrationSwapper.swap(orchestrationProperties));
     }
     
     private DataSource createMasterSlaveDataSource() throws SQLException {
         if (Strings.isNullOrEmpty(masterSlaveProperties.getMasterDataSourceName())) {
-            return new OrchestrationMasterSlaveDataSource(orchestrationProperties.getOrchestrationConfiguration());
+            return new OrchestrationMasterSlaveDataSource(orchestrationSwapper.swap(orchestrationProperties));
         }
         MasterSlaveDataSource masterSlaveDataSource = new MasterSlaveDataSource(
-                dataSourceMap, masterSlaveProperties.getMasterSlaveRuleConfiguration(), configMapProperties.getConfigMap(), propProperties.getProps());
-        return new OrchestrationMasterSlaveDataSource(masterSlaveDataSource, orchestrationProperties.getOrchestrationConfiguration());
+                dataSourceMap, masterSlaveSwapper.swap(masterSlaveProperties), configMapProperties.getConfigMap(), propProperties.getProps());
+        return new OrchestrationMasterSlaveDataSource(masterSlaveDataSource, orchestrationSwapper.swap(orchestrationProperties));
     }
     
     @Override

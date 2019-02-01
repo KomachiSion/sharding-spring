@@ -17,7 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.spring.boot.masterslave;
 
-import org.apache.shardingsphere.core.yaml.masterslave.YamlMasterSlaveRuleConfiguration;
+import org.apache.shardingsphere.core.yaml.config.masterslave.YamlMasterSlaveRuleConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

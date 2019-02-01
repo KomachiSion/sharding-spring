@@ -27,6 +27,8 @@ import io.shardingsphere.shardingjdbc.spring.boot.util.PropertyUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.core.exception.ShardingException;
 import org.apache.shardingsphere.core.util.InlineExpressionParser;
+import org.apache.shardingsphere.core.yaml.swapper.impl.MasterSlaveRuleConfigurationYamlSwapper;
+import org.apache.shardingsphere.core.yaml.swapper.impl.ShardingRuleConfigurationYamlSwapper;
 import org.apache.shardingsphere.shardingjdbc.api.MasterSlaveDataSourceFactory;
 import org.apache.shardingsphere.shardingjdbc.api.ShardingDataSourceFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -66,6 +68,10 @@ public class SpringBootConfiguration implements EnvironmentAware {
     
     private final Map<String, DataSource> dataSourceMap = new LinkedHashMap<>();
     
+    private final ShardingRuleConfigurationYamlSwapper shardingSwapper = new ShardingRuleConfigurationYamlSwapper();
+    
+    private final MasterSlaveRuleConfigurationYamlSwapper masterSlaveSwapper = new MasterSlaveRuleConfigurationYamlSwapper();
+    
     /**
      * Get data source bean.
      *
@@ -75,8 +81,8 @@ public class SpringBootConfiguration implements EnvironmentAware {
     @Bean
     public DataSource dataSource() throws SQLException {
         return null == masterSlaveProperties.getMasterDataSourceName()
-                ? ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingProperties.getShardingRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps())
-                : MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveProperties.getMasterSlaveRuleConfiguration(), configMapProperties.getConfigMap(), propMapProperties.getProps());
+                ? ShardingDataSourceFactory.createDataSource(dataSourceMap, shardingSwapper.swap(shardingProperties), configMapProperties.getConfigMap(), propMapProperties.getProps())
+                : MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, masterSlaveSwapper.swap(masterSlaveProperties), configMapProperties.getConfigMap(), propMapProperties.getProps());
     }
     
     @Override
