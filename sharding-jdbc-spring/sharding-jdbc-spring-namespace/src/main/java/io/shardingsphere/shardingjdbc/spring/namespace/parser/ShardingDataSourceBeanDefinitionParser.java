@@ -172,7 +172,7 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     
     private BeanDefinition parseTableRuleConfiguration(final Element tableElement) {
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(TableRuleConfiguration.class);
-        factory.addPropertyValue("logicTable", tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_TABLE_ATTRIBUTE));
+        factory.addConstructorArgValue(tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.LOGIC_TABLE_ATTRIBUTE));
         parseActualDataNodes(tableElement, factory);
         parseDatabaseShardingStrategyConfiguration(tableElement, factory);
         parseTableShardingStrategyConfiguration(tableElement, factory);
@@ -185,7 +185,7 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     private void parseActualDataNodes(final Element tableElement, final BeanDefinitionBuilder factory) {
         String actualDataNodes = tableElement.getAttribute(ShardingDataSourceBeanDefinitionParserTag.ACTUAL_DATA_NODES_ATTRIBUTE);
         if (!Strings.isNullOrEmpty(actualDataNodes)) {
-            factory.addPropertyValue("actualDataNodes", actualDataNodes);
+            factory.addConstructorArgValue(actualDataNodes);
         }
     }
     
