@@ -22,8 +22,8 @@ import io.shardingsphere.shardingjdbc.orchestration.spring.fixture.IncrementKeyG
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.EmbedTestingServer;
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.FieldValueUtil;
 import org.apache.shardingsphere.api.ConfigMapContext;
-import org.apache.shardingsphere.api.config.strategy.InlineShardingStrategyConfiguration;
-import org.apache.shardingsphere.api.config.strategy.StandardShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
+import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
 import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
 import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
 import org.apache.shardingsphere.core.rule.BindingTableRule;

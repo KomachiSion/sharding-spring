@@ -19,7 +19,7 @@ package io.shardingsphere.shardingjdbc.spring.namespace.parser;
 
 import com.google.common.base.Strings;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
-import org.apache.shardingsphere.api.config.EncryptorConfiguration;
+import org.apache.shardingsphere.api.config.encryptor.EncryptorConfiguration;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
