@@ -19,7 +19,7 @@ package io.shardingsphere.shardingjdbc.spring.fixture;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.shardingsphere.core.keygen.generator.ShardingKeyGenerator;
+import org.apache.shardingsphere.core.keygen.ShardingKeyGenerator;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,12 +33,12 @@ public final class IncrementKeyGenerator implements ShardingKeyGenerator {
     private Properties properties = new Properties();
     
     @Override
-    public Comparable<?> generateKey() {
-        return sequence.incrementAndGet();
+    public String getType() {
+        return "INCREMENT";
     }
     
     @Override
-    public String getType() {
-        return "INCREMENT"; 
+    public Comparable<?> generateKey() {
+        return sequence.incrementAndGet();
     }
 }

@@ -19,7 +19,7 @@ package io.shardingsphere.shardingjdbc.orchestration.spring.fixture;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.shardingsphere.core.keygen.generator.ShardingKeyGenerator;
+import org.apache.shardingsphere.core.keygen.ShardingKeyGenerator;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,12 +33,12 @@ public final class DecrementKeyGenerator implements ShardingKeyGenerator {
     private final AtomicInteger sequence = new AtomicInteger(100);
     
     @Override
-    public Comparable<?> generateKey() {
-        return sequence.decrementAndGet();
+    public String getType() {
+        return "DECREMENT";
     }
     
     @Override
-    public String getType() {
-        return "DECREMENT";
+    public Comparable<?> generateKey() {
+        return sequence.decrementAndGet();
     }
 }

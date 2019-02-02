@@ -24,7 +24,7 @@
     <sharding:hint-strategy id="hintStrategy" algorithm-ref="defaultHintShardingAlgorithm" />
     <sharding:none-strategy id="noneStrategy" />
     
-    <sharding:key-generator id="defaultKeyGenerator" type="INCREMENT" />
+    <sharding:key-generator id="defaultKeyGenerator" type="INCREMENT" column="id" />
     <sharding:key-generator id="orderKeyGenerator" type="INCREMENT" column="order_id" />
     
     <bean:properties id="dataProtectorProps">
