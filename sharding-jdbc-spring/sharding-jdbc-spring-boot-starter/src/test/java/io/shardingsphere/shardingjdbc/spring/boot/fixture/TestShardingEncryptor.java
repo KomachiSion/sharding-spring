@@ -17,7 +17,9 @@
 
 package io.shardingsphere.shardingjdbc.spring.boot.fixture;
 
-import org.apache.shardingsphere.core.encrypt.ShardingEncryptor;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.shardingsphere.spi.algorithm.encrypt.ShardingEncryptor;
 
 import java.util.Properties;
 
@@ -26,6 +28,8 @@ import java.util.Properties;
  *
  * @author panjuan
  */
+@Getter
+@Setter
 public final class TestShardingEncryptor implements ShardingEncryptor {
     
     private Properties properties = new Properties();
@@ -33,16 +37,6 @@ public final class TestShardingEncryptor implements ShardingEncryptor {
     @Override
     public String getType() {
         return "test";
-    }
-    
-    @Override
-    public Properties getProperties() {
-        return properties;
-    }
-    
-    @Override
-    public void setProperties(final Properties properties) {
-        this.properties = properties;
     }
     
     @Override
