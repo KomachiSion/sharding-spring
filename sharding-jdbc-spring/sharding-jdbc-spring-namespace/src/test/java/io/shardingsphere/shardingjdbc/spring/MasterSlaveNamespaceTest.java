@@ -18,32 +18,21 @@
 package io.shardingsphere.shardingjdbc.spring;
 
 import io.shardingsphere.shardingjdbc.spring.util.FieldValueUtil;
-import org.apache.shardingsphere.api.ConfigMapContext;
-import org.apache.shardingsphere.api.algorithm.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.core.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.core.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
 import org.apache.shardingsphere.core.rule.MasterSlaveRule;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.spi.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithm;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = "classpath:META-INF/rdb/masterSlaveNamespace.xml")
 public class MasterSlaveNamespaceTest extends AbstractJUnit4SpringContextTests {
-    
-    @BeforeClass
-    public static void setUp() {
-        ConfigMapContext.getInstance().getConfigMap().clear();
-    }
     
     @Test
     public void assertDefaultMaserSlaveDataSource() {
@@ -63,22 +52,13 @@ public class MasterSlaveNamespaceTest extends AbstractJUnit4SpringContextTests {
     
     @Test
     public void assertRefMasterSlaveDataSource() {
-        MasterSlaveLoadBalanceAlgorithm randomLoadBalanceAlgorithm = this.applicationContext.getBean("randomLoadBalanceAlgorithm", MasterSlaveLoadBalanceAlgorithm.class);
+        MasterSlaveLoadBalanceAlgorithm randomLoadBalanceAlgorithm = applicationContext.getBean("randomLoadBalanceAlgorithm", MasterSlaveLoadBalanceAlgorithm.class);
         MasterSlaveRule masterSlaveRule = getMasterSlaveRule("refMasterSlaveDataSource");
         assertTrue(masterSlaveRule.getLoadBalanceAlgorithm() == randomLoadBalanceAlgorithm);
     }
     
     private MasterSlaveRule getMasterSlaveRule(final String masterSlaveDataSourceName) {
-        MasterSlaveDataSource masterSlaveDataSource = this.applicationContext.getBean(masterSlaveDataSourceName, MasterSlaveDataSource.class);
+        MasterSlaveDataSource masterSlaveDataSource = applicationContext.getBean(masterSlaveDataSourceName, MasterSlaveDataSource.class);
         return (MasterSlaveRule) FieldValueUtil.getFieldValue(masterSlaveDataSource, "masterSlaveRule", true);
-    }
-    
-    @Test
-    public void assertConfigMapDataSource() {
-        Object masterSlaveDataSource = this.applicationContext.getBean("configMapDataSource");
-        Map<String, Object> configMap = new HashMap<>();
-        configMap.put("key1", "value1");
-        assertThat(ConfigMapContext.getInstance().getConfigMap(), is(configMap));
-        assertThat(masterSlaveDataSource, instanceOf(MasterSlaveDataSource.class));
     }
 }

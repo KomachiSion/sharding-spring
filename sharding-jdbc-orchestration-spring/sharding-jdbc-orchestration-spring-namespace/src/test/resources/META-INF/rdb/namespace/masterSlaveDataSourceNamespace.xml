@@ -9,8 +9,8 @@
                         ">
     <import resource="../datasource/masterSlaveDataSource.xml" />
 
-    <bean id="randomLoadBalanceAlgorithm" class="org.apache.shardingsphere.api.algorithm.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm" />
-    <bean id="roundRobinLoadBalanceAlgorithm" class="org.apache.shardingsphere.api.algorithm.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm" />
+    <bean id="randomLoadBalanceAlgorithm" class="org.apache.shardingsphere.core.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm" />
+    <bean id="roundRobinLoadBalanceAlgorithm" class="org.apache.shardingsphere.core.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm" />
     
     <master-slave:data-source id="defaultMasterSlaveDataSource" master-data-source-name="dbtbl_0_master" slave-data-source-names="dbtbl_0_slave_0, dbtbl_0_slave_1" >
         <master-slave:props>
@@ -22,9 +22,4 @@
     <master-slave:data-source id="randomMasterSlaveDataSource" master-data-source-name="dbtbl_0_master" slave-data-source-names="dbtbl_0_slave_0, dbtbl_0_slave_1" strategy-ref="randomLoadBalanceAlgorithm" />
     <master-slave:data-source id="roundRobinMasterSlaveDataSource" master-data-source-name="dbtbl_0_master" slave-data-source-names="dbtbl_0_slave_0, dbtbl_0_slave_1" strategy-ref="roundRobinLoadBalanceAlgorithm" />
     <master-slave:data-source id="refMasterSlaveDataSource" master-data-source-name="dbtbl_1_master" slave-data-source-names="dbtbl_1_slave_0, dbtbl_1_slave_1" strategy-ref="randomLoadBalanceAlgorithm" />
-    <master-slave:data-source id="configMapDataSource" master-data-source-name="dbtbl_1_master" slave-data-source-names="dbtbl_1_slave_0, dbtbl_1_slave_1" strategy-ref="randomLoadBalanceAlgorithm" >
-        <master-slave:config-map>
-            <entry key="key1" value="value1" />
-        </master-slave:config-map>
-    </master-slave:data-source>
 </beans>

@@ -21,7 +21,6 @@ import io.shardingsphere.shardingjdbc.orchestration.spring.datasource.Orchestrat
 import io.shardingsphere.shardingjdbc.orchestration.spring.fixture.IncrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.EmbedTestingServer;
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.FieldValueUtil;
-import org.apache.shardingsphere.api.ConfigMapContext;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.StandardShardingStrategyConfiguration;
 import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
@@ -39,7 +38,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -56,7 +54,6 @@ public class OrchestrationShardingNamespaceTest extends AbstractJUnit4SpringCont
     @BeforeClass
     public static void init() {
         EmbedTestingServer.start();
-        ConfigMapContext.getInstance().getConfigMap().clear();
     }
     
     @Test
@@ -155,9 +152,6 @@ public class OrchestrationShardingNamespaceTest extends AbstractJUnit4SpringCont
     public void assertPropsDataSource() {
         OrchestrationSpringShardingDataSource shardingDataSource = applicationContext.getBean("propsDataSourceOrchestration", OrchestrationSpringShardingDataSource.class);
         ShardingDataSource dataSource = (ShardingDataSource) FieldValueUtil.getFieldValue(shardingDataSource, "dataSource", true);
-        Map<String, Object> configMap = new HashMap<>();
-        configMap.put("key1", "value1");
-        assertThat(ConfigMapContext.getInstance().getConfigMap(), is(configMap));
         ShardingContext shardingContext = (ShardingContext) FieldValueUtil.getFieldValue(dataSource, "shardingContext", false);
         assertTrue(shardingContext.getShardingProperties().<Boolean>getValue(ShardingPropertiesConstant.SQL_SHOW));
         ShardingProperties shardingProperties = shardingContext.getShardingProperties();

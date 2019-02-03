@@ -20,7 +20,6 @@ package io.shardingsphere.shardingjdbc.spring.boot.type;
 import io.shardingsphere.shardingjdbc.spring.boot.util.EmbedTestingServer;
 import lombok.SneakyThrows;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.shardingsphere.api.ConfigMapContext;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.shardingjdbc.orchestration.internal.datasource.OrchestrationMasterSlaveDataSource;
 import org.junit.BeforeClass;
@@ -34,8 +33,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -53,7 +50,6 @@ public class OrchestrationSpringBootMasterSlaveTest {
     @BeforeClass
     public static void init() {
         EmbedTestingServer.start();
-        ConfigMapContext.getInstance().getConfigMap().clear();
     }
     
     @Test
@@ -67,10 +63,5 @@ public class OrchestrationSpringBootMasterSlaveTest {
             assertThat(((BasicDataSource) each).getMaxTotal(), is(16));
             assertThat(((BasicDataSource) each).getUsername(), is("root"));
         }
-        Map<String, Object> configMap = new ConcurrentHashMap<>();
-        configMap.put("key1", "value1");
-        configMap.put("key2", "value1");
-        configMap.put("username", "root");
-        assertThat(ConfigMapContext.getInstance().getConfigMap(), is(configMap));
     }
 }

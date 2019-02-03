@@ -20,11 +20,10 @@ package io.shardingsphere.shardingjdbc.orchestration.spring;
 import io.shardingsphere.shardingjdbc.orchestration.spring.datasource.OrchestrationSpringMasterSlaveDataSource;
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.EmbedTestingServer;
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.FieldValueUtil;
-import org.apache.shardingsphere.api.ConfigMapContext;
-import org.apache.shardingsphere.api.algorithm.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
 import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
 import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
+import org.apache.shardingsphere.core.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.core.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
 import org.apache.shardingsphere.core.rule.MasterSlaveRule;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.shardingjdbc.orchestration.internal.datasource.OrchestrationMasterSlaveDataSource;
@@ -34,10 +33,6 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -48,7 +43,6 @@ public class OrchestrationMasterSlaveNamespaceTest extends AbstractJUnit4SpringC
     @BeforeClass
     public static void init() {
         EmbedTestingServer.start();
-        ConfigMapContext.getInstance().getConfigMap().clear();
     }
     
     @Test
@@ -83,15 +77,6 @@ public class OrchestrationMasterSlaveNamespaceTest extends AbstractJUnit4SpringC
         OrchestrationMasterSlaveDataSource masterSlaveDataSource = applicationContext.getBean(masterSlaveDataSourceName, OrchestrationMasterSlaveDataSource.class);
         MasterSlaveDataSource dataSource = (MasterSlaveDataSource) FieldValueUtil.getFieldValue(masterSlaveDataSource, "dataSource", true);
         return dataSource.getMasterSlaveRule();
-    }
-    
-    @Test
-    public void assertConfigMapDataSource() {
-        Object masterSlaveDataSource = applicationContext.getBean("configMapDataSourceOrchestration");
-        Map<String, Object> configMap = new HashMap<>();
-        configMap.put("key1", "value1");
-        assertThat(ConfigMapContext.getInstance().getConfigMap(), is(configMap));
-        assertThat(masterSlaveDataSource, instanceOf(OrchestrationMasterSlaveDataSource.class));
     }
     
     @Test

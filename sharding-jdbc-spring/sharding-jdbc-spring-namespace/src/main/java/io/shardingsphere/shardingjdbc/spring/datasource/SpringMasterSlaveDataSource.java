@@ -24,7 +24,6 @@ import org.apache.shardingsphere.spi.algorithm.masterslave.MasterSlaveLoadBalanc
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -35,11 +34,9 @@ import java.util.Properties;
  */
 public class SpringMasterSlaveDataSource extends MasterSlaveDataSource {
     
-    public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name,
-                                       final String masterDataSourceName, final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm loadBalanceAlgorithm, 
-                                       final Map<String, Object> configMap, final Properties props) throws SQLException {
-        super(dataSourceMap, getMasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, loadBalanceAlgorithm),
-                null == configMap ? new LinkedHashMap<String, Object>() : configMap, null == props ? new Properties() : props);
+    public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name, final String masterDataSourceName, 
+                                       final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm loadBalanceAlgorithm, final Properties props) throws SQLException {
+        super(dataSourceMap, getMasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, loadBalanceAlgorithm), null == props ? new Properties() : props);
     }
     
     private static MasterSlaveRuleConfiguration getMasterSlaveRuleConfiguration(

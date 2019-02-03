@@ -14,5 +14,4 @@
     <orchestraion:master-slave-data-source id="randomMasterSlaveDataSourceOrchestration" data-source-ref="randomMasterSlaveDataSource" registry-center-ref="regCenter" />
     <orchestraion:master-slave-data-source id="roundRobinMasterSlaveDataSourceOrchestration" data-source-ref="roundRobinMasterSlaveDataSource" registry-center-ref="regCenter" />
     <orchestraion:master-slave-data-source id="refMasterSlaveDataSourceOrchestration" data-source-ref="refMasterSlaveDataSource" registry-center-ref="regCenter" />
-    <orchestraion:master-slave-data-source id="configMapDataSourceOrchestration" data-source-ref="configMapDataSource" registry-center-ref="regCenter" />
 </beans>
