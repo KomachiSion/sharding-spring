@@ -9,9 +9,7 @@
                         ">
     <import resource="datasource/masterSlaveDataSource.xml" />
     <import resource="datasource/dataSource.xml" />
-
-    <bean id="randomStrategy" class="org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm" />
-
+    
     <sharding:inline-strategy id="databaseStrategy" sharding-column="user_id" algorithm-expression="dbtbl_${user_id % 2}" />
     <sharding:inline-strategy id="orderTableStrategy" sharding-column="order_id" algorithm-expression="t_order_${order_id % 4}" />
     <sharding:inline-strategy id="orderItemTableStrategy" sharding-column="order_id" algorithm-expression="t_order_item_${order_id % 4}" />

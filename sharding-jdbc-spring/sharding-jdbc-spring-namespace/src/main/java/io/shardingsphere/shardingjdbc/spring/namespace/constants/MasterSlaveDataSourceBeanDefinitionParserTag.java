@@ -34,7 +34,5 @@ public final class MasterSlaveDataSourceBeanDefinitionParserTag {
     
     public static final String SLAVE_DATA_SOURCE_NAMES_ATTRIBUTE = "slave-data-source-names";
     
-    public static final String STRATEGY_REF_ATTRIBUTE = "strategy-ref";
-    
-    public static final String STRATEGY_TYPE_ATTRIBUTE = "strategy-type";
+    public static final String LOAD_BALANCE_ALGORITHM_REF_ATTRIBUTE = "strategy-ref";
 }

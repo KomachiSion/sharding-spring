@@ -22,8 +22,8 @@ import io.shardingsphere.shardingjdbc.orchestration.spring.util.EmbedTestingServ
 import io.shardingsphere.shardingjdbc.orchestration.spring.util.FieldValueUtil;
 import org.apache.shardingsphere.api.ConfigMapContext;
 import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.RoundRobinMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.algorithm.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.algorithm.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
 import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
 import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
 import org.apache.shardingsphere.core.rule.MasterSlaveRule;
@@ -74,9 +74,9 @@ public class OrchestrationMasterSlaveNamespaceTest extends AbstractJUnit4SpringC
     
     @Test
     public void assertRefMasterSlaveDataSource() {
-        MasterSlaveLoadBalanceAlgorithm randomStrategy = applicationContext.getBean("randomStrategy", MasterSlaveLoadBalanceAlgorithm.class);
+        MasterSlaveLoadBalanceAlgorithm randomLoadBalanceAlgorithm = applicationContext.getBean("randomLoadBalanceAlgorithm", MasterSlaveLoadBalanceAlgorithm.class);
         MasterSlaveRule masterSlaveRule = getMasterSlaveRule("refMasterSlaveDataSourceOrchestration");
-        assertThat(masterSlaveRule.getLoadBalanceAlgorithm(), is(randomStrategy));
+        assertThat(masterSlaveRule.getLoadBalanceAlgorithm(), is(randomLoadBalanceAlgorithm));
     }
     
     private MasterSlaveRule getMasterSlaveRule(final String masterSlaveDataSourceName) {

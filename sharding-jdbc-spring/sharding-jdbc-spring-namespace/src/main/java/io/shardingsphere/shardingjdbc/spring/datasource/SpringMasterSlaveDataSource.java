@@ -18,7 +18,6 @@
 package io.shardingsphere.shardingjdbc.spring.datasource;
 
 import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithmType;
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 
@@ -37,17 +36,9 @@ import java.util.Properties;
 public class SpringMasterSlaveDataSource extends MasterSlaveDataSource {
     
     public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name,
-                                       final String masterDataSourceName, final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm strategy, 
+                                       final String masterDataSourceName, final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm loadBalanceAlgorithm, 
                                        final Map<String, Object> configMap, final Properties props) throws SQLException {
-        super(dataSourceMap, getMasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, strategy),
-                null == configMap ? new LinkedHashMap<String, Object>() : configMap, null == props ? new Properties() : props);
-    }
-    
-    public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name,
-                                       final String masterDataSourceName, final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithmType strategyType, 
-                                       final Map<String, Object> configMap, final Properties props) throws SQLException {
-        super(dataSourceMap,
-                getMasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, null == strategyType ? null : strategyType.getAlgorithm()),
+        super(dataSourceMap, getMasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, loadBalanceAlgorithm),
                 null == configMap ? new LinkedHashMap<String, Object>() : configMap, null == props ? new Properties() : props);
     }
     

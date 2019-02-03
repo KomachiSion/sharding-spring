@@ -22,7 +22,7 @@ import com.google.common.base.Strings;
 import io.shardingsphere.shardingjdbc.spring.datasource.SpringMasterSlaveDataSource;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.MasterSlaveDataSourceBeanDefinitionParserTag;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
-import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithmType;
+import org.apache.shardingsphere.api.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithmFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -54,11 +54,11 @@ public final class MasterSlaveDataSourceBeanDefinitionParser extends AbstractBea
         factory.addConstructorArgValue(parseId(element));
         factory.addConstructorArgValue(parseMasterDataSourceRef(element));
         factory.addConstructorArgValue(parseSlaveDataSourcesRef(element));
-        String strategyRef = parseStrategyRef(element);
-        if (!Strings.isNullOrEmpty(strategyRef)) {
-            factory.addConstructorArgReference(strategyRef);
+        String loadBalanceAlgorithmRefAttributeRef = parseLoadBalanceAlgorithmRefAttributeRef(element);
+        if (!Strings.isNullOrEmpty(loadBalanceAlgorithmRefAttributeRef)) {
+            factory.addConstructorArgReference(loadBalanceAlgorithmRefAttributeRef);
         } else {
-            factory.addConstructorArgValue(parseStrategyType(element));
+            factory.addConstructorArgValue(MasterSlaveLoadBalanceAlgorithmFactory.getInstance().newAlgorithm());
         }
         factory.addConstructorArgValue(parseConfigMap(element, parserContext, factory.getBeanDefinition()));
         factory.addConstructorArgValue(parseProperties(element, parserContext));
@@ -91,14 +91,8 @@ public final class MasterSlaveDataSourceBeanDefinitionParser extends AbstractBea
         return result;
     }
     
-    private String parseStrategyRef(final Element element) {
-        return element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.STRATEGY_REF_ATTRIBUTE);
-    }
-    
-    private MasterSlaveLoadBalanceAlgorithmType parseStrategyType(final Element element) {
-        String result = element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.STRATEGY_TYPE_ATTRIBUTE);
-        return Strings.isNullOrEmpty(result) ? MasterSlaveLoadBalanceAlgorithmType.getDefaultAlgorithmType() : MasterSlaveLoadBalanceAlgorithmType
-            .valueOf(result);
+    private String parseLoadBalanceAlgorithmRefAttributeRef(final Element element) {
+        return element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.LOAD_BALANCE_ALGORITHM_REF_ATTRIBUTE);
     }
     
     private Map parseConfigMap(final Element element, final ParserContext parserContext, final BeanDefinition beanDefinition) {

@@ -26,8 +26,8 @@ import io.shardingsphere.shardingjdbc.spring.datasource.SpringShardingDataSource
 import io.shardingsphere.shardingjdbc.spring.fixture.IncrementKeyGenerator;
 import io.shardingsphere.shardingjdbc.spring.util.FieldValueUtil;
 import org.apache.shardingsphere.api.ConfigMapContext;
-import org.apache.shardingsphere.api.algorithm.masterslave.RandomMasterSlaveLoadBalanceAlgorithm;
-import org.apache.shardingsphere.api.algorithm.masterslave.RoundRobinMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.algorithm.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm;
+import org.apache.shardingsphere.api.algorithm.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm;
 import org.apache.shardingsphere.api.config.sharding.strategy.ComplexShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.HintShardingStrategyConfiguration;
 import org.apache.shardingsphere.api.config.sharding.strategy.InlineShardingStrategyConfiguration;

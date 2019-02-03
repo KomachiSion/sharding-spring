@@ -17,7 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.spring.boot.fixture;
 
-import org.apache.shardingsphere.core.encrypt.encryptor.ShardingEncryptor;
+import org.apache.shardingsphere.core.encrypt.ShardingEncryptor;
 
 import java.util.Properties;
 
