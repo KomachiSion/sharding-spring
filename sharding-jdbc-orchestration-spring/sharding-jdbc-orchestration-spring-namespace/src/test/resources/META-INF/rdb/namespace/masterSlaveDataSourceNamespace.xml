@@ -8,7 +8,7 @@
                         http://shardingsphere.io/schema/shardingsphere/masterslave/master-slave.xsd
                         ">
     <import resource="../datasource/masterSlaveDataSource.xml" />
-
+    
     <bean id="randomLoadBalanceAlgorithm" class="org.apache.shardingsphere.core.masterslave.impl.RandomMasterSlaveLoadBalanceAlgorithm" />
     <bean id="roundRobinLoadBalanceAlgorithm" class="org.apache.shardingsphere.core.masterslave.impl.RoundRobinMasterSlaveLoadBalanceAlgorithm" />
     

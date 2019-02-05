@@ -25,7 +25,6 @@ import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSou
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.ShardingRuleConfiguration;
 import org.apache.shardingsphere.api.config.sharding.TableRuleConfiguration;
-import org.apache.shardingsphere.core.masterslave.MasterSlaveLoadBalanceAlgorithmFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -137,17 +136,17 @@ public final class ShardingDataSourceBeanDefinitionParser extends AbstractBeanDe
     }
     
     private void parseMasterSlaveRuleLoadBalanceAlgorithm(final Element masterSlaveElement, final BeanDefinitionBuilder factory) {
-        String loadBalanceAlgorithmRef = masterSlaveElement.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.LOAD_BALANCE_ALGORITHM_REF_ATTRIBUTE);
-        if (!Strings.isNullOrEmpty(loadBalanceAlgorithmRef)) {
-            factory.addConstructorArgReference(loadBalanceAlgorithmRef);
-        } else {
-            factory.addConstructorArgValue(MasterSlaveLoadBalanceAlgorithmFactory.getInstance().newAlgorithm());
-        }
+        // TODO process LOAD_BALANCE_ALGORITHM_REF_ATTRIBUTE
+//        String loadBalanceAlgorithmRef = masterSlaveElement.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.LOAD_BALANCE_ALGORITHM_REF_ATTRIBUTE);
+//        if (!Strings.isNullOrEmpty(loadBalanceAlgorithmRef)) {
+//            factory.addConstructorArgReference(loadBalanceAlgorithmRef);
+//        } else {
+//            factory.addConstructorArgValue(MasterSlaveLoadBalanceAlgorithmFactory.getInstance().newAlgorithm());
+//        }
     }
     
     private Collection<String> parseSlaveDataSourcesRef(final Element element) {
-        List<String> slaveDataSources = Splitter.on(",").trimResults().splitToList(element.getAttribute(
-            MasterSlaveDataSourceBeanDefinitionParserTag.SLAVE_DATA_SOURCE_NAMES_ATTRIBUTE));
+        List<String> slaveDataSources = Splitter.on(",").trimResults().splitToList(element.getAttribute(MasterSlaveDataSourceBeanDefinitionParserTag.SLAVE_DATA_SOURCE_NAMES_ATTRIBUTE));
         Collection<String> result = new ManagedList<>(slaveDataSources.size());
         result.addAll(slaveDataSources);
         return result;

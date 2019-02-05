@@ -17,6 +17,7 @@
 
 package io.shardingsphere.shardingjdbc.spring.datasource;
 
+import org.apache.shardingsphere.api.config.masterslave.LoadBalanceStrategyConfiguration;
 import org.apache.shardingsphere.api.config.masterslave.MasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.shardingjdbc.jdbc.core.datasource.MasterSlaveDataSource;
 import org.apache.shardingsphere.spi.algorithm.masterslave.MasterSlaveLoadBalanceAlgorithm;
@@ -41,6 +42,7 @@ public class SpringMasterSlaveDataSource extends MasterSlaveDataSource {
     
     private static MasterSlaveRuleConfiguration getMasterSlaveRuleConfiguration(
             final String name, final String masterDataSourceName, final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm loadBalanceAlgorithm) {
-        return new MasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, loadBalanceAlgorithm);
+        return new MasterSlaveRuleConfiguration(name, masterDataSourceName, slaveDataSourceNames, 
+                new LoadBalanceStrategyConfiguration(loadBalanceAlgorithm.getType(), loadBalanceAlgorithm.getProperties()));
     }
 }
