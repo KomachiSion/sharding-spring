@@ -34,11 +34,6 @@ import java.util.Properties;
  */
 public final class SpringMasterSlaveDataSource extends MasterSlaveDataSource {
     
-    public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name, final String masterDataSourceName,
-                                       final Collection<String> slaveDataSourceNames, final Properties props) throws SQLException {
-        this(dataSourceMap, name, masterDataSourceName, slaveDataSourceNames, null, props);
-    }
-    
     public SpringMasterSlaveDataSource(final Map<String, DataSource> dataSourceMap, final String name, final String masterDataSourceName, 
                                        final Collection<String> slaveDataSourceNames, final MasterSlaveLoadBalanceAlgorithm loadBalanceAlgorithm, final Properties props) throws SQLException {
         super(dataSourceMap, new MasterSlaveRule(name, masterDataSourceName, slaveDataSourceNames, loadBalanceAlgorithm), null == props ? new Properties() : props);

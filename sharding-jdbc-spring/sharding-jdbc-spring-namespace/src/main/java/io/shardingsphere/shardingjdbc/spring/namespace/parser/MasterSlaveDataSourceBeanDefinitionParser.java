@@ -54,6 +54,8 @@ public final class MasterSlaveDataSourceBeanDefinitionParser extends AbstractBea
         String loadBalanceAlgorithmRefAttributeRef = parseLoadBalanceAlgorithmRefAttributeRef(element);
         if (!Strings.isNullOrEmpty(loadBalanceAlgorithmRefAttributeRef)) {
             factory.addConstructorArgReference(loadBalanceAlgorithmRefAttributeRef);
+        } else {
+            factory.addConstructorArgValue(null);
         }
         factory.addConstructorArgValue(parseProperties(element, parserContext));
         return factory.getBeanDefinition();
