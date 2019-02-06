@@ -17,15 +17,14 @@
 
 package io.shardingsphere.shardingjdbc.spring.algorithm;
 
-import org.apache.shardingsphere.api.algorithm.sharding.ShardingValue;
 import org.apache.shardingsphere.api.algorithm.sharding.hint.HintShardingAlgorithm;
 
 import java.util.Collection;
 
-public final class DefaultHintShardingAlgorithm implements HintShardingAlgorithm {
+public final class DefaultHintShardingAlgorithm implements HintShardingAlgorithm<Integer> {
     
     @Override
-    public Collection<String> doSharding(final Collection<String> availableTargetNames, final ShardingValue shardingValue) {
+    public Collection<String> doSharding(final Collection<String> availableTargetNames, final String logicTableName, final String columnName, Collection<Integer> shardingValues) {
         return availableTargetNames;
     }
 }
