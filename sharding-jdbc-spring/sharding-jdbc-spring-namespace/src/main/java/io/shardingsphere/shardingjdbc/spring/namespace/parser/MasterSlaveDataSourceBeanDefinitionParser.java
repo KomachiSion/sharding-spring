@@ -22,7 +22,6 @@ import com.google.common.base.Strings;
 import io.shardingsphere.shardingjdbc.spring.datasource.SpringMasterSlaveDataSource;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.MasterSlaveDataSourceBeanDefinitionParserTag;
 import io.shardingsphere.shardingjdbc.spring.namespace.constants.ShardingDataSourceBeanDefinitionParserTag;
-import org.apache.shardingsphere.core.masterslave.MasterSlaveLoadBalanceAlgorithmFactory;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -55,8 +54,6 @@ public final class MasterSlaveDataSourceBeanDefinitionParser extends AbstractBea
         String loadBalanceAlgorithmRefAttributeRef = parseLoadBalanceAlgorithmRefAttributeRef(element);
         if (!Strings.isNullOrEmpty(loadBalanceAlgorithmRefAttributeRef)) {
             factory.addConstructorArgReference(loadBalanceAlgorithmRefAttributeRef);
-        } else {
-            factory.addConstructorArgValue(MasterSlaveLoadBalanceAlgorithmFactory.getInstance().newAlgorithm());
         }
         factory.addConstructorArgValue(parseProperties(element, parserContext));
         return factory.getBeanDefinition();
