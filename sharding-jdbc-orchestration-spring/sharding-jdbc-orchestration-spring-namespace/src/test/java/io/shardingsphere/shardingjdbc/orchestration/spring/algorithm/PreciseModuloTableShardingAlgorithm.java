@@ -18,15 +18,16 @@
 package io.shardingsphere.shardingjdbc.orchestration.spring.algorithm;
 
 import org.apache.shardingsphere.api.algorithm.sharding.standard.PreciseShardingAlgorithm;
+import org.apache.shardingsphere.api.algorithm.sharding.standard.PreciseShardingValue;
 
 import java.util.Collection;
 
 public final class PreciseModuloTableShardingAlgorithm implements PreciseShardingAlgorithm<Integer> {
     
     @Override
-    public String doSharding(final Collection<String> availableTargetNames, final String logicTableName, final String columnName, final Integer shardingValue) {
+    public String doSharding(final Collection<String> availableTargetNames, final PreciseShardingValue<Integer> shardingValue) {
         for (String each : availableTargetNames) {
-            if (each.endsWith(shardingValue % 4 + "")) {
+            if (each.endsWith(shardingValue.getValue() % 4 + "")) {
                 return each;
             }
         }
