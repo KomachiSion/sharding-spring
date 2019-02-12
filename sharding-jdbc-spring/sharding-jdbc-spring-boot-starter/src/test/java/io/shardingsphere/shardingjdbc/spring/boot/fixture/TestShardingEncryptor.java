@@ -40,12 +40,12 @@ public final class TestShardingEncryptor implements ShardingEncryptor {
     }
     
     @Override
-    public String encode(final Object plaintext) {
+    public String encrypt(final Object plaintext) {
         return "";
     }
     
     @Override
-    public String decode(final Object ciphertext) {
+    public String decrypt(final Object ciphertext) {
         return "";
     }
 }
