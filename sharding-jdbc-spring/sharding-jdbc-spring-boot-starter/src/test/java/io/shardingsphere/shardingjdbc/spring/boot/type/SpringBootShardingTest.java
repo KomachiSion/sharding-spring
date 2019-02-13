@@ -21,7 +21,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.shardingsphere.core.constant.properties.ShardingProperties;
 import org.apache.shardingsphere.core.constant.properties.ShardingPropertiesConstant;
-import org.apache.shardingsphere.core.routing.strategy.ShardingEncryptorStrategy;
+import org.apache.shardingsphere.core.encrypt.ShardingEncryptorStrategy;
 import org.apache.shardingsphere.core.routing.strategy.inline.InlineShardingStrategy;
 import org.apache.shardingsphere.core.rule.DataNode;
 import org.apache.shardingsphere.core.rule.ShardingRule;
